@@ -1,2 +1,2 @@
 # expenses
-A web application for expenses management
+A web application for expenses management.
