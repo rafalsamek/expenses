@@ -1,13 +1,13 @@
-package com.smartvizz.expenses;
+package com.smartvizz.expenses.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExpensesApplication {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExpensesApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }
