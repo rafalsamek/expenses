@@ -4,4 +4,9 @@
 *.iml
 *.ipr
 
-.env*
+# Ignore all .env files
+.env
+.env.*
+
+# Do not ignore .env.dist
+!.env.dist
