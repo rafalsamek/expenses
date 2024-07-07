@@ -13,7 +13,7 @@ public record ExpenseResponse(
                                 Instant createdAt,
                                 Instant updatedAt
 ) {
-    ExpenseResponse(ExpenseEntity entity) {
+    public ExpenseResponse(ExpenseEntity entity) {
         this(
                 entity.getId(),
                 entity.getTitle(),
