@@ -1,5 +1,6 @@
 package com.smartvizz.expenses.backend.services;
 
+import com.smartvizz.expenses.backend.data.repositories.ExpenseRepository;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
 import com.smartvizz.expenses.backend.web.models.ExpenseResponse;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,11 @@ import java.util.List;
 
 @Service
 public class ExpenseService {
+    private final ExpenseRepository expenseRepository;
+
+    public ExpenseService(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
 
     public List<ExpenseResponse> fetchAll() {
         List<ExpenseResponse> expenseResponses = new ArrayList<>();
