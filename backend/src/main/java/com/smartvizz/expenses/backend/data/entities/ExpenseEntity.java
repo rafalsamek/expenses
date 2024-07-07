@@ -181,7 +181,7 @@ public class ExpenseEntity {
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(nullable = true, length = 255)
+    @Column(nullable = true, length = 1000)
     String description;
 
     @Column(nullable = false)

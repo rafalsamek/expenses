@@ -1,0 +1,20 @@
+meta {
+  name: update expense
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:8080/api/expenses/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "drugie śniadnie",
+    "description": "zakupy na śniadanie",
+    "amount": 40,
+    "currency": "PLN"
+  }
+}

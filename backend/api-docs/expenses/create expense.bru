@@ -1,0 +1,20 @@
+meta {
+  name: create expense
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/expenses
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "śniadnie",
+    "description": "zakupy na śniadanie",
+    "amount": 40,
+    "currency": "PLN"
+  }
+}

@@ -39,9 +39,9 @@ public class ExpenseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExpense);
     }
 
-    @PutMapping
-    public ResponseEntity<ExpenseResponse> update(@RequestBody ExpenseRequest request) {
-        ExpenseResponse updatedExpense = expenseService.update(request);
+    @PutMapping("{id}")
+    public ResponseEntity<ExpenseResponse> update(@PathVariable Long id, @RequestBody ExpenseRequest request) {
+        ExpenseResponse updatedExpense = expenseService.update(id, request);
 
         return ResponseEntity.ok(updatedExpense);
     }
