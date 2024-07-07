@@ -17,28 +17,20 @@ public class ExpenseService {
     }
 
     public List<ExpenseResponse> fetchAll() {
-        List<ExpenseResponse> expenseResponses = new ArrayList<>();
-
-        return expenseResponses;
+        return null;
     }
 
     public ExpenseResponse fetchOne(Long id) {
-        ExpenseResponse expenseResponse = new ExpenseResponse();
-
-        return expenseResponse;
+        return null;
     }
 
 
     public ExpenseResponse create(ExpenseRequest request) {
-        ExpenseResponse expenseResponse = new ExpenseResponse();
-
-        return expenseResponse;
+        return null;
     }
 
     public ExpenseResponse update(ExpenseRequest request) {
-        ExpenseResponse expenseResponse = new ExpenseResponse();
-
-        return expenseResponse;
+        return null;
     }
 
 
