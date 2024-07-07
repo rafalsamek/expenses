@@ -188,7 +188,7 @@ public class ExpenseEntity {
     Long amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 3)
+    @Column(nullable = false, length = 3, columnDefinition = "VARCHAR(3) DEFAULT 'PLN'")
     Currency currency;
 
     @CreationTimestamp
@@ -218,19 +218,19 @@ public class ExpenseEntity {
         this.id = id;
     }
 
-    public @Max(255) String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(@Max(255) String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public @Max(1000) String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(@Max(1000) String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -242,11 +242,11 @@ public class ExpenseEntity {
         this.amount = amount;
     }
 
-    public @Max(3) Currency getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(@Max(3) Currency currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
