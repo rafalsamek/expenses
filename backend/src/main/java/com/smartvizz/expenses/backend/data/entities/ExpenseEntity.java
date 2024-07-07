@@ -174,23 +174,21 @@ public class ExpenseEntity {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @Column(nullable = false)
-    @Max(255)
+    @Column(nullable = false, length = 255)
     private String title;
 
-    @Max(1000)
+    @Column(nullable = true, length = 255)
     String description;
 
     @Column(nullable = false)
     Long amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Max(3)
+    @Column(nullable = false, length = 3)
     Currency currency;
 
     @CreationTimestamp
