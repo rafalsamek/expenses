@@ -3,6 +3,7 @@ package com.smartvizz.expenses.backend.web.controllers;
 import com.smartvizz.expenses.backend.services.ExpenseService;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
 import com.smartvizz.expenses.backend.web.models.ExpenseResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,16 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseResponse>> list() {
-        List<ExpenseResponse> categories = expenseService.fetchAll();
+    public ResponseEntity<Page<ExpenseResponse>> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "25") int size,
+            @RequestParam(defaultValue = "title") String[] sortColumns,
+            @RequestParam(defaultValue = "asc") String[] sortDirections,
+            @RequestParam(defaultValue = "title") String searchBy
+    ) {
+        Page<ExpenseResponse> expenses = expenseService.fetchAll(page, size, sortColumns, sortDirections, searchBy);
 
-        return ResponseEntity.ok(categories);
+        return ResponseEntity.ok(expenses);
     }
 
     @GetMapping("{id}")

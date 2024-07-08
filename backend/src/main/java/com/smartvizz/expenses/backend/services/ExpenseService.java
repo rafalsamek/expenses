@@ -2,10 +2,16 @@ package com.smartvizz.expenses.backend.services;
 
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
 import com.smartvizz.expenses.backend.data.repositories.ExpenseRepository;
+import com.smartvizz.expenses.backend.data.specifications.ExpenseSpecifications;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
 import com.smartvizz.expenses.backend.web.models.ExpenseResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,11 +22,31 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
     }
 
-    public List<ExpenseResponse> fetchAll() {
-        return expenseRepository.findAll()
-                .stream()
-                .map(ExpenseResponse::new)
-                .toList();
+    public Page<ExpenseResponse> fetchAll(
+            int page,
+            int size,
+            String[] sortColumns,
+            String[] sortDirections,
+            String searchBy
+    ) {
+        ArrayList<Sort.Order> sortOrders = new ArrayList<>();
+
+        for (int i = 0; i < sortColumns.length; i++) {
+
+            String sortColumn = sortColumns[i];
+            Sort.Direction sortDirection =
+                    sortDirections.length > i && sortDirections[i].equalsIgnoreCase("desc")
+                            ? Sort.Direction.DESC
+                            : Sort.Direction.ASC;
+
+
+            sortOrders.add(new Sort.Order(sortDirection, sortColumn));
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
+
+        return expenseRepository.findAll(ExpenseSpecifications.searchExpense(searchBy), pageable)
+                .map(ExpenseResponse::new);
     }
 
     public ExpenseResponse fetchOne(Long id) {
