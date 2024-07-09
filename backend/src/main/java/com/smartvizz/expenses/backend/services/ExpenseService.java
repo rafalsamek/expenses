@@ -5,6 +5,8 @@ import com.smartvizz.expenses.backend.data.repositories.ExpenseRepository;
 import com.smartvizz.expenses.backend.data.specifications.ExpenseSpecifications;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
 import com.smartvizz.expenses.backend.web.models.ExpenseResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +14,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ExpenseService.class);
 
     public ExpenseService(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;

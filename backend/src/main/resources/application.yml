@@ -11,3 +11,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+logging:
+  level:
+    com.smartvizz.expenses.backend: DEBUG

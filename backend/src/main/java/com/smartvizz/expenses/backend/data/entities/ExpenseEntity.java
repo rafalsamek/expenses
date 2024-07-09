@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 
 @Entity
-@Table(name = "expeneses")
+@Table(name = "expenses")
 public class ExpenseEntity {
     public enum Currency {
         AED, // United Arab Emirates Dirham
@@ -192,11 +192,11 @@ public class ExpenseEntity {
     Currency currency;
 
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Instant createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updatedAt;
 
     public ExpenseEntity(String title, String description, Long amount, Currency currency) {
