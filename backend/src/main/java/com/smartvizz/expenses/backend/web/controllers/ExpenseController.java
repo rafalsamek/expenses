@@ -21,9 +21,9 @@ public class ExpenseController {
     public ResponseEntity<Page<ExpenseResponse>> list(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "25") int size,
-            @RequestParam(defaultValue = "createdAt") String[] sortColumns,
-            @RequestParam(defaultValue = "asc") String[] sortDirections,
-            @RequestParam String searchBy
+            @RequestParam(defaultValue = "createdAt,title") String[] sortColumns,
+            @RequestParam(defaultValue = "asc,asc") String[] sortDirections,
+            @RequestParam(defaultValue = "") String searchBy
     ) {
         Page<ExpenseResponse> expenses = expenseService.fetchAll(page, size, sortColumns, sortDirections, searchBy);
 
