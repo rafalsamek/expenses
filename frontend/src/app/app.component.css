@@ -1,6 +1,7 @@
 #page {
   width: 80%;
   margin: auto;
+  padding-bottom: 80px; /* Give space for the footer */
 }
 
 #header, #footer {
@@ -12,6 +13,14 @@
   padding: 40px 0;
   position: relative;
   width: 100%;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 #header h1, #footer p, #header h3 {
@@ -109,7 +118,9 @@ th {
 
 .action-buttons button {
   margin-right: 5px;
-  border-radius: 5px; /* Rounded corners for the action buttons */
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .pagination {
@@ -119,7 +130,7 @@ th {
   margin: 20px 0;
 }
 
-.pagination button {
+.pagination button, .pagination .page-input {
   padding: 5px 10px;
   font-size: 16px;
   margin: 0 5px;
@@ -130,8 +141,55 @@ th {
   border-radius: 5px; /* Rounded corners for the pagination buttons */
 }
 
-.pagination .page-number {
+.pagination .page-input {
+  width: 60px;
+  text-align: center;
+}
+
+.pagination .page-info {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #333;
+}
+
+.pagination .page-info #number-of-pages {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+.pagination .page-input {
   background-color: #f4f4f4;
   color: #333;
   border-radius: 5px; /* Rounded corners for the pagination page numbers */
+}
+
+#left-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#left-menu ul li {
+  margin-bottom: 10px;
+}
+
+#left-menu ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  display: block;
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners for menu items */
+}
+
+#left-menu ul li.selected a {
+  background-color: #7499d4;
+  color: white;
+  font-weight: bold;
+}
+
+#left-menu ul li a:hover {
+  background-color: #eaeaea;
 }
