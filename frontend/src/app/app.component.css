@@ -4,40 +4,6 @@
   padding-bottom: 80px; /* Give space for the footer */
 }
 
-#header, #footer {
-  background-color: #7499d4;
-  background-size: cover;
-  background-position: center;
-  color: white;
-  text-align: center;
-  padding: 40px 0;
-  position: relative;
-  width: 100%;
-}
-
-#footer {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  z-index: 1;
-}
-
-#header h1, #footer p, #header h3 {
-  margin: 0;
-  position: relative;
-  z-index: 1;
-  color: white;
-  text-shadow: 1px 1px 2px black;
-}
-
-#header h1 {
-  font-size: 50px;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-}
-
 #container {
   display: flex;
 }
