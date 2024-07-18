@@ -1,1 +1,187 @@
-<p>container works!</p>
+<div id="container">
+  <div id="left-menu">
+    <ul>
+      <li class="selected"><a href="#">Expenses</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">Wallets</a></li>
+      <li><a href="#">Reports</a></li>
+      <li><a href="#">Imports</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </div>
+  <div id="main-content">
+    <div id="content-header">
+      <h2>Expenses</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>Sample Title 1</td>
+          <td>This is a sample description 1.</td>
+          <td>20.00</td>
+          <td>USD</td>
+          <td>2024-01-01</td>
+          <td>2024-01-02</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Sample Title 2</td>
+          <td>This is a sample description 2.</td>
+          <td>40.00</td>
+          <td>PLN</td>
+          <td>2024-01-03</td>
+          <td>2024-01-04</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Sample Title 3</td>
+          <td>This is a sample description 3.</td>
+          <td>15.00</td>
+          <td>EUR</td>
+          <td>2024-01-05</td>
+          <td>2024-01-06</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Sample Title 4</td>
+          <td>This is a sample description 4.</td>
+          <td>50.00</td>
+          <td>GBP</td>
+          <td>2024-01-07</td>
+          <td>2024-01-08</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Sample Title 5</td>
+          <td>This is a sample description 5.</td>
+          <td>25.00</td>
+          <td>CAD</td>
+          <td>2024-01-09</td>
+          <td>2024-01-10</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Sample Title 6</td>
+          <td>This is a sample description 6.</td>
+          <td>30.00</td>
+          <td>JPY</td>
+          <td>2024-01-11</td>
+          <td>2024-01-12</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Sample Title 7</td>
+          <td>This is a sample description 7.</td>
+          <td>10.00</td>
+          <td>AUD</td>
+          <td>2024-01-13</td>
+          <td>2024-01-14</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Sample Title 8</td>
+          <td>This is a sample description 8.</td>
+          <td>45.00</td>
+          <td>CNY</td>
+          <td>2024-01-15</td>
+          <td>2024-01-16</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Sample Title 9</td>
+          <td>This is a sample description 9.</td>
+          <td>35.00</td>
+          <td>INR</td>
+          <td>2024-01-17</td>
+          <td>2024-01-18</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Sample Title 10</td>
+          <td>This is a sample description 10.</td>
+          <td>60.00</td>
+          <td>BRL</td>
+          <td>2024-01-19</td>
+          <td>2024-01-20</td>
+          <td class="action-buttons">
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button class="first">« First</button>
+        <button class="prev">‹ Prev</button>
+        <input type="number" class="page-input" value="1" min="1" max="235">
+        <span class="page-info">of <span id="number-of-pages">235</span></span>
+        <button class="next">Next ›</button>
+        <button class="last">Last »</button>
+      </div>
+    </div>
+  </div>
+</div>
