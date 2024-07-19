@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {ExpenseEntity} from "../../models";
 import {NgForOf, NgIf} from "@angular/common";
+import {ExpenseEntity} from "./expense-entity.model";
 
 @Component({
   selector: 'app-expenses',
@@ -18,7 +18,6 @@ export class ExpensesComponent {
   }
 
   expensesList: ExpenseEntity[] = [];
-
 
   fetchExpenses() {
     this.expensesList = [
