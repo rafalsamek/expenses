@@ -20,146 +20,26 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>Sample Title 1</td>
-      <td>This is a sample description 1.</td>
-      <td>20.00</td>
-      <td>USD</td>
-      <td>2024-01-01</td>
-      <td>2024-01-02</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Sample Title 2</td>
-      <td>This is a sample description 2.</td>
-      <td>40.00</td>
-      <td>PLN</td>
-      <td>2024-01-03</td>
-      <td>2024-01-04</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Sample Title 3</td>
-      <td>This is a sample description 3.</td>
-      <td>15.00</td>
-      <td>EUR</td>
-      <td>2024-01-05</td>
-      <td>2024-01-06</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Sample Title 4</td>
-      <td>This is a sample description 4.</td>
-      <td>50.00</td>
-      <td>GBP</td>
-      <td>2024-01-07</td>
-      <td>2024-01-08</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Sample Title 5</td>
-      <td>This is a sample description 5.</td>
-      <td>25.00</td>
-      <td>CAD</td>
-      <td>2024-01-09</td>
-      <td>2024-01-10</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Sample Title 6</td>
-      <td>This is a sample description 6.</td>
-      <td>30.00</td>
-      <td>JPY</td>
-      <td>2024-01-11</td>
-      <td>2024-01-12</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>Sample Title 7</td>
-      <td>This is a sample description 7.</td>
-      <td>10.00</td>
-      <td>AUD</td>
-      <td>2024-01-13</td>
-      <td>2024-01-14</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>Sample Title 8</td>
-      <td>This is a sample description 8.</td>
-      <td>45.00</td>
-      <td>CNY</td>
-      <td>2024-01-15</td>
-      <td>2024-01-16</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>Sample Title 9</td>
-      <td>This is a sample description 9.</td>
-      <td>35.00</td>
-      <td>INR</td>
-      <td>2024-01-17</td>
-      <td>2024-01-18</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>Sample Title 10</td>
-      <td>This is a sample description 10.</td>
-      <td>60.00</td>
-      <td>BRL</td>
-      <td>2024-01-19</td>
-      <td>2024-01-20</td>
-      <td class="action-buttons">
-        <button>View</button>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
+    <ng-container *ngIf="expensesList.length; else noDocuments">
+      <tr *ngFor="let entity of expensesList; let i = index">
+        <td>{{ entity.id }}</td>
+        <td>{{ entity.title }}</td>
+        <td>{{ entity.description }}</td>
+        <td>{{ entity.amount }}</td>
+        <td>{{ entity.currency }}</td>
+        <td>{{ entity.createdAt }}</td>
+        <td>{{ entity.updatedAt }}</td>
+        <td class="action-buttons">
+          <button>View</button>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <ng-template #noDocuments>
+      <tr><td colspan="8" style="text-align: center;">No Expenses</td></tr>
+    </ng-template>
     </tbody>
   </table>
   <div class="pagination">
