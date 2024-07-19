@@ -12,5 +12,5 @@ import {ContainerComponent} from "./container/container.component";
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Expenses Application';
 }
