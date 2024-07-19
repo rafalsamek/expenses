@@ -1,0 +1,35 @@
+#left-menu {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#left-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#left-menu ul li {
+  margin-bottom: 10px;
+}
+
+#left-menu ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  display: block;
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners for menu items */
+}
+
+#left-menu ul li.selected a {
+  background-color: #7499d4;
+  color: white;
+  font-weight: bold;
+}
+
+#left-menu ul li a:hover {
+  background-color: #eaeaea;
+}
