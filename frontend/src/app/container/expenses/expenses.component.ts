@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {ExpenseEntity} from "./expense-entity.model";
 
@@ -12,12 +12,12 @@ import {ExpenseEntity} from "./expense-entity.model";
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.css'
 })
-export class ExpensesComponent {
+export class ExpensesComponent implements OnInit {
+  expensesList: ExpenseEntity[] = [];
+
   ngOnInit(): void {
     this.fetchExpenses();
   }
-
-  expensesList: ExpenseEntity[] = [];
 
   fetchExpenses() {
     this.expensesList = [
@@ -67,7 +67,5 @@ export class ExpensesComponent {
         updatedAt: '2024-07-20T06:00:00Z'
       }
     ];
-
-    return this.expensesList;
   }
 }
