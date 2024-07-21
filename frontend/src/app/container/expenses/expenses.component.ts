@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
-import {ExpenseEntity} from "./expense-entity.model";
-import {ExpenseService} from "./expense.service";
+import { NgForOf, NgIf } from "@angular/common";
+import { ExpenseEntity } from "./expense-entity.model";
+import { ExpenseService } from "./expense.service";
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-expenses',
   standalone: true,
   imports: [
     NgIf,
-    NgForOf
+    NgForOf,
+    MatPaginator
   ],
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.css'
 })
 export class ExpensesComponent implements OnInit {
   expensesList: ExpenseEntity[] = [];
+  currentPage = 0;
+  pageSize = 25;
+  totalItems = 0;
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -24,7 +29,16 @@ export class ExpensesComponent implements OnInit {
 
   fetchExpenses() {
     this.expenseService
-      .getExpenses()
-      .subscribe((expenses) => (this.expensesList = expenses));
+      .getExpenses(this.currentPage, this.pageSize)
+      .subscribe((response) => {
+        this.expensesList = response.content;
+        this.totalItems = response.totalElements;
+      });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchExpenses();
   }
 }
