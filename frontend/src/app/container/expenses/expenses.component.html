@@ -42,12 +42,5 @@
     </ng-template>
     </tbody>
   </table>
-  <div class="pagination">
-    <button class="first">« First</button>
-    <button class="prev">‹ Prev</button>
-    <input type="number" class="page-input" value="1" min="1" max="235">
-    <span class="page-info">of <span id="number-of-pages">235</span></span>
-    <button class="next">Next ›</button>
-    <button class="last">Last »</button>
-  </div>
+  <app-pagination [totalElements]="totalElements" [size]="size" (pageChanged)="onPageChanged($event)"></app-pagination>
 </div>
