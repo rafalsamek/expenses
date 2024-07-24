@@ -1,4 +1,4 @@
-#crud-header {
+.crud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,23 +9,23 @@
   color: #7499d4;
 }
 
-#crud-header h2 {
+.crud-header h2 {
   margin: 0;
 }
 
-#crud-header .search-bar {
+.crud-header .search-bar {
   display: flex;
   align-items: center;
 }
 
-#crud-header input {
+.crud-header input {
   padding: 5px;
   font-size: 16px;
   border: 1px solid #f2f2f2;
   border-radius: 5px; /* Rounded corners for the input */
 }
 
-#crud-header button {
+.crud-header button {
   padding: 5px 10px;
   font-size: 16px;
   margin-left: 10px;
