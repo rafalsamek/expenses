@@ -9,7 +9,7 @@ describe('ExpenseEntity', () => {
       amount: 100,
       currency: 'USD',
       createdAt: '2024-07-19T12:00:00Z',
-      updatedAt: '2024-07-19T12:00:00Z'
+      updatedAt: '2024-07-19T12:00:00Z',
     };
 
     expect(expense).toBeTruthy();

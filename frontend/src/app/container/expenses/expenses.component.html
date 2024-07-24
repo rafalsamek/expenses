@@ -1,46 +1,7 @@
-<div id="content-header">
-  <h2>Expenses</h2>
-  <div class="search-bar">
-    <input type="text" placeholder="Search...">
-    <button>Search</button>
-  </div>
-</div>
-<div class="table-container">
-  <table>
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Amount</th>
-      <th>Currency</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <ng-container *ngIf="expensesList.length; else noDocuments">
-      <tr *ngFor="let entity of expensesList; let i = index">
-        <td>{{ entity.id }}</td>
-        <td>{{ entity.title }}</td>
-        <td>{{ entity.description }}</td>
-        <td>{{ entity.amount }}</td>
-        <td>{{ entity.currency }}</td>
-        <td>{{ entity.createdAt }}</td>
-        <td>{{ entity.updatedAt }}</td>
-        <td class="action-buttons">
-          <button>View</button>
-          <button>Edit</button>
-          <button>Delete</button>
-        </td>
-      </tr>
-    </ng-container>
-
-    <ng-template #noDocuments>
-      <tr><td colspan="8" style="text-align: center;">No Expenses</td></tr>
-    </ng-template>
-    </tbody>
-  </table>
-  <app-pagination [totalElements]="totalElements" [size]="size" (pageChanged)="onPageChanged($event)"></app-pagination>
-</div>
+<expenses-crud-header></expenses-crud-header>
+<expenses-crud-table [expensesList]="expensesList"></expenses-crud-table>
+<expenses-crud-pagination
+  [totalElements]="totalElements"
+  [size]="size"
+  (pageChanged)="onPageChanged($event)"
+></expenses-crud-pagination>

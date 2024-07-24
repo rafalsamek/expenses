@@ -10,7 +10,8 @@
   cursor: pointer;
 }
 
-#header h1, #header h3 {
+#header h1,
+#header h3 {
   margin: 0;
   position: relative;
   z-index: 1;

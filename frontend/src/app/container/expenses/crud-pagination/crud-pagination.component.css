@@ -1,11 +1,12 @@
-.pagination {
+.crud-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px 0;
 }
 
-.pagination button, .pagination .page-input {
+.crud-pagination button,
+.crud-pagination .page-input {
   padding: 5px 10px;
   font-size: 16px;
   margin: 0 5px;
@@ -13,29 +14,29 @@
   background-color: #7499d4;
   color: white;
   cursor: pointer;
-  border-radius: 5px; /* Rounded corners for the pagination buttons */
+  border-radius: 5px; /* Rounded corners for the crud-pagination buttons */
 }
 
-.pagination .page-input {
+.crud-pagination .page-input {
   width: 60px;
   text-align: center;
 }
 
-.pagination .page-info {
+.crud-pagination .page-info {
   font-size: 16px;
   margin: 0 10px;
   color: #333;
 }
 
-.pagination .page-info #number-of-pages {
+.crud-pagination .page-info #number-of-pages {
   font-size: 16px;
   margin: 0 10px;
   color: #333;
   font-weight: bold;
 }
 
-.pagination .page-input {
+.crud-pagination .page-input {
   background-color: #f4f4f4;
   color: #333;
-  border-radius: 5px; /* Rounded corners for the pagination page numbers */
+  border-radius: 5px; /* Rounded corners for the crud-pagination page numbers */
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {ExpenseEntity} from "./expense-entity.model";
-import {Observable} from "rxjs";
+import { ExpenseEntity } from './expense-entity.model';
+import { Observable } from 'rxjs';
 
 export interface ExpenseResponse {
   totalPages: number;
@@ -34,7 +34,7 @@ export interface ExpenseResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExpenseService {
   private apiUrl = `${environment.apiUrl}/api/expenses`;
@@ -44,6 +44,8 @@ export class ExpenseService {
   }
 
   getExpenses(page: number, size: number): Observable<ExpenseResponse> {
-    return this.httpClient.get<ExpenseResponse>(`${this.apiUrl}?page=${page}&size=${size}`);
+    return this.httpClient.get<ExpenseResponse>(
+      `${this.apiUrl}?page=${page}&size=${size}`
+    );
   }
 }
