@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-pagination',
+  selector: 'expenses-crud-pagination',
   standalone: true,
   imports: [],
-  templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  templateUrl: './crud-pagination.component.html',
+  styleUrl: './crud-pagination.component.css',
 })
-export class PaginationComponent {
+export class CrudPaginationComponent {
   @Input() totalElements!: number;
   @Input() size!: number;
   @Output() pageChanged = new EventEmitter<number>();
 
-  currentPage = 1;
+  pageNumber = 1;
 
   get totalPages(): number {
     return Math.ceil(this.totalElements / this.size);
@@ -23,14 +23,14 @@ export class PaginationComponent {
   }
 
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.changePage(this.currentPage - 1);
+    if (this.pageNumber > 1) {
+      this.changePage(this.pageNumber - 1);
     }
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.changePage(this.currentPage + 1);
+    if (this.pageNumber < this.totalPages) {
+      this.changePage(this.pageNumber + 1);
     }
   }
 
@@ -40,8 +40,8 @@ export class PaginationComponent {
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.pageChanged.emit(this.currentPage);
+      this.pageNumber = page;
+      this.pageChanged.emit(this.pageNumber);
     }
   }
 

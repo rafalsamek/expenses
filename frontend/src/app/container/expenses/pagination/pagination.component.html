@@ -1,8 +1,0 @@
-<div class="pagination">
-  <button class="first" (click)="firstPage()">« First</button>
-  <button class="prev" (click)="prevPage()">‹ Prev</button>
-  <input type="number" class="page-input" [value]="currentPage" [min]="1" [max]="totalPages" (change)="onPageInputChange($event)">
-  <span class="page-info">of <span id="number-of-pages">{{ totalPages }}</span></span>
-  <button class="next" (click)="nextPage()">Next ›</button>
-  <button class="last" (click)="lastPage()">Last »</button>
-</div>
