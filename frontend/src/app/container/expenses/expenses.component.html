@@ -1,4 +1,6 @@
-<expenses-crud-header></expenses-crud-header>
+<expenses-crud-header
+  (searchChanged)="onSearchChanged($event)"
+></expenses-crud-header>
 <expenses-crud-table
   [expensesList]="expensesList"
   (sortChanged)="onSortChanged($event.sortColumns, $event.sortDirections)"
@@ -6,5 +8,6 @@
 <expenses-crud-pagination
   [totalElements]="totalElements"
   [size]="size"
+  [pageNumber]="pageNumber"
   (pageChanged)="onPageChanged($event)"
 ></expenses-crud-pagination>

@@ -27,6 +27,7 @@ export class ExpensesComponent implements OnInit {
   totalElements = 0;
   sortColumns = 'id';
   sortDirections = 'asc';
+  searchBy = '';
 
   constructor(private expenseService: ExpenseService) {}
 
@@ -35,7 +36,8 @@ export class ExpensesComponent implements OnInit {
       this.pageNumber,
       this.size,
       this.sortColumns,
-      this.sortDirections
+      this.sortDirections,
+      this.searchBy
     );
   }
 
@@ -43,10 +45,11 @@ export class ExpensesComponent implements OnInit {
     pageNumber: number,
     size: number,
     sortColumns: string,
-    sortDirections: string
+    sortDirections: string,
+    searchBy: string
   ): void {
     this.expenseService
-      .getExpenses(pageNumber - 1, size, sortColumns, sortDirections)
+      .getExpenses(pageNumber - 1, size, sortColumns, sortDirections, searchBy)
       .subscribe((response) => {
         this.expensesList = response.content;
         this.totalElements = response.totalElements;
@@ -61,7 +64,8 @@ export class ExpensesComponent implements OnInit {
       this.pageNumber,
       this.size,
       this.sortColumns,
-      this.sortDirections
+      this.sortDirections,
+      this.searchBy
     );
   }
 
@@ -74,7 +78,20 @@ export class ExpensesComponent implements OnInit {
       this.pageNumber,
       this.size,
       this.sortColumns,
-      this.sortDirections
+      this.sortDirections,
+      this.searchBy
+    );
+  }
+
+  onSearchChanged(searchBy: string) {
+    this.searchBy = searchBy;
+    this.pageNumber = 1;
+    this.fetchExpenses(
+      this.pageNumber,
+      this.size,
+      this.sortColumns,
+      this.sortDirections,
+      this.searchBy
     );
   }
 }

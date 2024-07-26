@@ -47,10 +47,11 @@ export class ExpenseService {
     page: number,
     size: number,
     sortColumns: string,
-    sortDirections: string
+    sortDirections: string,
+    searchBy: string
   ): Observable<ExpenseResponse> {
     return this.httpClient.get<ExpenseResponse>(
-      `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}`
+      `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
     );
   }
 }

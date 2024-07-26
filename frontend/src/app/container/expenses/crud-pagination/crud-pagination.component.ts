@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'expenses-crud-pagination',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './crud-pagination.component.html',
   styleUrl: './crud-pagination.component.css',
 })
 export class CrudPaginationComponent {
   @Input() totalElements!: number;
   @Input() size!: number;
+  @Input() pageNumber!: number;
   @Output() pageChanged = new EventEmitter<number>();
-
-  pageNumber = 1;
 
   get totalPages(): number {
     return Math.ceil(this.totalElements / this.size);
