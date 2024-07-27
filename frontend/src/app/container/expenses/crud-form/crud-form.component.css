@@ -96,14 +96,14 @@
 }
 
 .btn-secondary {
-  background-color: #f2f2f2;
+  background-color: #7499d4;
   border: none;
-  color: inherit;
-  margin-right: 2px;
+  color: white;
   font-weight: bold;
+  margin-right: 2px;
 }
 
 .btn-secondary:hover {
-  background-color: #7499d4;
-  color: #fff;
+  background-color: #eaeaea;
+  color: #333;
 }

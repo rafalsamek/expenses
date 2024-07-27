@@ -21,6 +21,7 @@
 .crud-header input {
   padding: 5px;
   font-size: 16px;
+  margin-left: 10px;
   border: 1px solid #f2f2f2;
   border-radius: 5px; /* Rounded corners for the input */
 }
@@ -34,4 +35,9 @@
   color: white;
   cursor: pointer;
   border-radius: 5px; /* Rounded corners for the button */
+}
+
+.crud-header button:hover {
+  background-color: #eaeaea;
+  color: #333;
 }

@@ -1,6 +1,7 @@
 <div class="crud-header">
   <h2>Expenses</h2>
-  <form class="search-bar" (ngSubmit)="onSearch()">
+  <div class="search-bar">
+    <button (click)="openModal('add')">Add</button>
     <input
       type="text"
       placeholder="Search..."
@@ -8,7 +9,5 @@
       name="searchBy"
       (input)="onSearchInputChange($event)"
     />
-    <button>Search</button>
-    <button (click)="openModal('add')">Add</button>
-  </form>
+  </div>
 </div>

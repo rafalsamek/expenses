@@ -33,4 +33,5 @@
 #left-menu ul li a:hover {
   background-color: #eaeaea;
   color: #333;
+  font-weight: bold;
 }
