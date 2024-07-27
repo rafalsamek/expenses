@@ -5,6 +5,7 @@ import { ExpenseService } from './expense.service';
 import { CrudPaginationComponent } from './crud-pagination/crud-pagination.component';
 import { CrudHeaderComponent } from './crud-header/crud-header.component';
 import { CrudTableComponent } from './crud-table/crud-table.component';
+import { CrudFormComponent } from './crud-form/crud-form.component';
 
 @Component({
   selector: 'app-expenses',
@@ -15,6 +16,7 @@ import { CrudTableComponent } from './crud-table/crud-table.component';
     CrudPaginationComponent,
     CrudHeaderComponent,
     CrudTableComponent,
+    CrudFormComponent,
   ],
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.css',
@@ -28,6 +30,10 @@ export class ExpensesComponent implements OnInit {
   sortColumns = 'id';
   sortDirections = 'asc';
   searchBy = '';
+
+  showModal = false;
+  modalMode: 'add' | 'edit' | 'view' = 'view';
+  selectedExpense: any = {};
 
   constructor(private expenseService: ExpenseService) {}
 
@@ -93,5 +99,57 @@ export class ExpensesComponent implements OnInit {
       this.sortDirections,
       this.searchBy
     );
+  }
+
+  openModal(mode: 'add' | 'edit' | 'view', expense?: any) {
+    this.modalMode = mode;
+    if (mode === 'add') {
+      this.selectedExpense = { currency: 'PLN' };
+      this.showModal = true;
+    } else if (expense && expense.id) {
+      this.expenseService.getExpense(expense.id).subscribe(
+        (expenseData) => {
+          this.selectedExpense = expenseData;
+          this.showModal = true;
+        },
+        (error) => {
+          console.error('Error fetching expense', error);
+          // Handle error appropriately
+        }
+      );
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  saveExpense(expense: any) {
+    if (this.modalMode === 'add') {
+      this.expenseService.addExpense(expense).subscribe(
+        (newExpense) => {
+          this.expensesList.push(newExpense); // Add the new expense to the list
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error adding expense', error);
+          // Handle error appropriately
+        }
+      );
+    } else if (this.modalMode === 'edit') {
+      this.expenseService.updateExpense(expense).subscribe(
+        (updatedExpense) => {
+          const index = this.expensesList.findIndex((e) => e.id === expense.id);
+          if (index !== -1) {
+            this.expensesList[index] = updatedExpense; // Update the existing expense in the list
+          }
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error updating expense', error);
+          // Handle error appropriately
+        }
+      );
+    }
   }
 }

@@ -54,4 +54,19 @@ export class ExpenseService {
       `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
     );
   }
+
+  addExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
+    return this.httpClient.post<ExpenseEntity>(this.apiUrl, expense);
+  }
+
+  updateExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
+    return this.httpClient.put<ExpenseEntity>(
+      `${this.apiUrl}/${expense.id}`,
+      expense
+    );
+  }
+
+  getExpense(id: number): Observable<ExpenseEntity> {
+    return this.httpClient.get<ExpenseEntity>(`${this.apiUrl}/${id}`);
+  }
 }

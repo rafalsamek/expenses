@@ -1,6 +1,8 @@
 <expenses-crud-header
   (searchChanged)="onSearchChanged($event)"
-></expenses-crud-header>
+  (addExpense)="openModal('add')"
+>
+</expenses-crud-header>
 <expenses-crud-table
   [expensesList]="expensesList"
   (sortChanged)="onSortChanged($event.sortColumns, $event.sortDirections)"
@@ -11,3 +13,12 @@
   [pageNumber]="pageNumber"
   (pageChanged)="onPageChanged($event)"
 ></expenses-crud-pagination>
+
+<expenses-crud-form
+  *ngIf="showModal"
+  [showModal]="showModal"
+  [mode]="modalMode"
+  [expense]="selectedExpense"
+  (close)="closeModal()"
+  (save)="saveExpense($event)"
+></expenses-crud-form>
