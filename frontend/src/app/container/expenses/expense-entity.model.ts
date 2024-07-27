@@ -1,9 +1,9 @@
 export interface ExpenseEntity {
-  id: number;
+  id?: number;
   title: string;
-  description: string;
+  description?: string;
   amount: number;
   currency: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

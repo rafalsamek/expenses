@@ -101,7 +101,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
 
-  openModal(mode: 'add' | 'edit' | 'view', expense?: any) {
+  openModal(mode: 'add' | 'edit' | 'view', expense?: ExpenseEntity) {
     this.modalMode = mode;
     if (mode === 'add') {
       this.selectedExpense = { currency: 'PLN' };
@@ -124,7 +124,7 @@ export class ExpensesComponent implements OnInit {
     this.showModal = false;
   }
 
-  saveExpense(expense: any) {
+  saveExpense(expense: ExpenseEntity) {
     if (this.modalMode === 'add') {
       this.expenseService.addExpense(expense).subscribe(
         (newExpense) => {
