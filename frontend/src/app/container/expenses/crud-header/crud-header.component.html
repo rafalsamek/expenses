@@ -4,7 +4,8 @@
     <input
       type="text"
       placeholder="Search..."
-      [value]="searchBy"
+      [(ngModel)]="searchBy"
+      name="searchBy"
       (input)="onSearchInputChange($event)"
     />
     <button>Search</button>
