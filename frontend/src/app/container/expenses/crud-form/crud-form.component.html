@@ -9,25 +9,31 @@
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="title">Title</label>
             <input
               type="text"
               id="title"
-              [(ngModel)]="expense.title"
-              name="title"
-              [readonly]="mode === 'view'"
-              required
+              formControlName="title"
+              class="form-control"
             />
+            <div
+              *ngIf="form.get('title')?.touched && form.get('title')?.invalid"
+            >
+              <small
+                class="text-danger"
+                *ngIf="form.get('title')?.errors?.['required']"
+                >Title is required.</small
+              >
+            </div>
           </div>
           <div class="form-group">
             <label for="description">Description</label>
             <textarea
               id="description"
-              [(ngModel)]="expense.description"
-              name="description"
-              [readonly]="mode === 'view'"
+              formControlName="description"
+              class="form-control"
             ></textarea>
           </div>
           <div class="form-group">
@@ -35,25 +41,47 @@
             <input
               type="number"
               id="amount"
-              [(ngModel)]="expense.amount"
-              name="amount"
-              [readonly]="mode === 'view'"
-              required
+              formControlName="amount"
+              class="form-control"
+              step="0.01"
             />
+            <div
+              *ngIf="form.get('amount')?.touched && form.get('amount')?.invalid"
+            >
+              <small
+                class="text-danger"
+                *ngIf="form.get('amount')?.errors?.['required']"
+                >Amount is required.</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="form.get('amount')?.errors?.['min']"
+                >Amount must be greater than or equal to 0.01.</small
+              >
+            </div>
           </div>
           <div class="form-group">
             <label for="currency">Currency</label>
             <select
               id="currency"
-              [(ngModel)]="expense.currency"
-              name="currency"
-              [disabled]="mode === 'view'"
-              required
+              formControlName="currency"
+              class="form-control"
             >
               <option *ngFor="let currency of currencies" [value]="currency">
                 {{ currency }}
               </option>
             </select>
+            <div
+              *ngIf="
+                form.get('currency')?.touched && form.get('currency')?.invalid
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="form.get('currency')?.errors?.['required']"
+                >Currency is required.</small
+              >
+            </div>
           </div>
           <div class="modal-footer">
             <button

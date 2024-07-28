@@ -104,7 +104,6 @@ export class ExpensesComponent implements OnInit {
   openModal(mode: 'add' | 'edit' | 'view', expense?: ExpenseEntity) {
     this.modalMode = mode;
     if (mode === 'add') {
-      this.selectedExpense = { currency: 'PLN' };
       this.showModal = true;
     } else if (expense && expense.id) {
       this.expenseService.getExpense(expense.id).subscribe(
