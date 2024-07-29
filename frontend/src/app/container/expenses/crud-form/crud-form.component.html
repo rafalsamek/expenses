@@ -83,6 +83,9 @@
               >
             </div>
           </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
           <div class="modal-footer">
             <button
               type="button"

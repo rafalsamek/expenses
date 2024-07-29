@@ -4,6 +4,8 @@ import {
   Input,
   Output,
   OnInit,
+  OnChanges,
+  SimpleChanges,
   HostListener,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,10 +20,11 @@ import { ReactiveFormsModule } from '@angular/forms'; // Make sure to import Rea
   templateUrl: './crud-form.component.html',
   styleUrl: './crud-form.component.css',
 })
-export class CrudFormComponent implements OnInit {
+export class CrudFormComponent implements OnInit, OnChanges {
   @Input() showModal = false;
   @Input() mode: 'add' | 'edit' | 'view' = 'view';
   @Input() expense: ExpenseEntity | null = null;
+  @Input() errorMessage: string | null = null;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<ExpenseEntity>();
 
@@ -39,17 +42,42 @@ export class CrudFormComponent implements OnInit {
 
   ngOnInit() {
     this.currencies = Object.keys(Currency).filter((key) => isNaN(Number(key)));
+    this.initializeForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['expense'] && !changes['expense'].firstChange) {
+      this.initializeForm();
+    }
+    if (changes['errorMessage'] && changes['errorMessage'].currentValue) {
+      console.log(
+        'Received Error Message:',
+        changes['errorMessage'].currentValue
+      );
+    }
+  }
+
+  initializeForm() {
     if (this.expense) {
-      // Use setValue to ensure all fields are initialized correctly
       this.form.setValue({
         title: this.expense.title,
         description: this.expense.description || '',
         amount: this.expense.amount / 100, // Display amount divided by 100
         currency: this.expense.currency,
       });
+    } else {
+      this.form.reset({
+        title: '',
+        description: '',
+        amount: null,
+        currency: 'PLN',
+      });
     }
+
     if (this.mode === 'view') {
       this.form.disable();
+    } else {
+      this.form.enable();
     }
   }
 
@@ -71,7 +99,6 @@ export class CrudFormComponent implements OnInit {
         amount: formValue.amount * 100, // Convert amount to cents before sending to backend
       };
       this.save.emit(expenseToSave);
-      this.closeModal();
     } else {
       this.form.markAllAsTouched();
     }

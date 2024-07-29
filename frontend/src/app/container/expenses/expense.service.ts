@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ExpenseEntity } from './expense-entity.model';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface ExpenseResponse {
   totalPages: number;
@@ -50,23 +51,47 @@ export class ExpenseService {
     sortDirections: string,
     searchBy: string
   ): Observable<ExpenseResponse> {
-    return this.httpClient.get<ExpenseResponse>(
-      `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
-    );
+    return this.httpClient
+      .get<ExpenseResponse>(
+        `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
+      )
+      .pipe(catchError(this.handleError));
   }
 
   addExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
-    return this.httpClient.post<ExpenseEntity>(this.apiUrl, expense);
+    return this.httpClient
+      .post<ExpenseEntity>(this.apiUrl, expense)
+      .pipe(catchError(this.handleError));
   }
 
   updateExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
-    return this.httpClient.put<ExpenseEntity>(
-      `${this.apiUrl}/${expense.id}`,
-      expense
-    );
+    return this.httpClient
+      .put<ExpenseEntity>(`${this.apiUrl}/${expense.id}`, expense)
+      .pipe(catchError(this.handleError));
   }
 
   getExpense(id: number): Observable<ExpenseEntity> {
-    return this.httpClient.get<ExpenseEntity>(`${this.apiUrl}/${id}`);
+    return this.httpClient
+      .get<ExpenseEntity>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage: string[] = ['An unknown error occurred!'];
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred.
+      errorMessage = [`Error: ${error.error.message}`];
+    } else if (error.error && typeof error.error === 'object') {
+      // Handle validation errors
+      const validationErrors = error.error;
+      errorMessage = Object.entries(validationErrors).map(
+        ([field, msg]) => `${field}: ${msg}`
+      );
+    } else {
+      errorMessage = [
+        `Server returned code: ${error.status}, error message is: ${error.message}`,
+      ];
+    }
+    return throwError(errorMessage);
   }
 }
