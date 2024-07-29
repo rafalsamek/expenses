@@ -24,7 +24,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
   @Input() showModal = false;
   @Input() mode: 'add' | 'edit' | 'view' = 'view';
   @Input() expense: ExpenseEntity | null = null;
-  @Input() errorMessage: string | null = null;
+  @Input() errorMessage: string[] | null = null;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<ExpenseEntity>();
 

@@ -9,6 +9,12 @@
         </button>
       </div>
       <div class="modal-body">
+        <div
+          *ngIf="errorMessage && errorMessage.length"
+          class="alert alert-danger"
+        >
+          <div *ngFor="let error of errorMessage">{{ error }}</div>
+        </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="title">Title</label>
@@ -82,9 +88,6 @@
                 >Currency is required.</small
               >
             </div>
-          </div>
-          <div *ngIf="errorMessage" class="alert alert-danger">
-            {{ errorMessage }}
           </div>
           <div class="modal-footer">
             <button

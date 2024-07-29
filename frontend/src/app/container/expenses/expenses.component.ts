@@ -34,7 +34,7 @@ export class ExpensesComponent implements OnInit {
   showModal = false;
   modalMode: 'add' | 'edit' | 'view' = 'view';
   selectedExpense: ExpenseEntity | null = null;
-  errorMessage: string | null = null;
+  errorMessage: string[] | null = null;
 
   constructor(private expenseService: ExpenseService) {}
 
