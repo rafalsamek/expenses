@@ -3,6 +3,7 @@ package com.smartvizz.expenses.backend.web.controllers;
 import com.smartvizz.expenses.backend.services.ExpenseService;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
 import com.smartvizz.expenses.backend.web.models.ExpenseResponse;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +40,14 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public ResponseEntity<ExpenseResponse> create(@RequestBody ExpenseRequest request) {
+    public ResponseEntity<ExpenseResponse> create(@Valid @RequestBody ExpenseRequest request) {
         ExpenseResponse createdExpense = expenseService.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExpense);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ExpenseResponse> update(@PathVariable Long id, @RequestBody ExpenseRequest request) {
+    public ResponseEntity<ExpenseResponse> update(@PathVariable Long id, @Valid @RequestBody ExpenseRequest request) {
         ExpenseResponse updatedExpense = expenseService.update(id, request);
 
         return ResponseEntity.ok(updatedExpense);
