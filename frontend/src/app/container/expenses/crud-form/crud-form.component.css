@@ -109,6 +109,10 @@
 }
 
 /* Error message styles */
+.text-danger {
+  color: #721c24;
+}
+
 .alert-danger {
   background-color: #f8d7da;
   color: #721c24;
