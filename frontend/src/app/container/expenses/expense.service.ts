@@ -85,7 +85,7 @@ export class ExpenseService {
       // Handle validation errors
       const validationErrors = error.error;
       errorMessage = Object.entries(validationErrors).map(
-        ([field, msg]) => `${field}: ${msg}`
+        ([field, msg]) => `${msg}`
       );
     } else {
       errorMessage = [
