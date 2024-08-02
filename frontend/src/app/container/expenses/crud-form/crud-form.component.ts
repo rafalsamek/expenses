@@ -96,7 +96,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
       const formValue = this.form.value;
       const expenseToSave = {
         ...formValue,
-        amount: formValue.amount * 100, // Convert amount to cents before sending to backend
+        amount: Math.round(formValue.amount * 100), // Convert amount to cents and ensure it's a whole number
       };
       this.save.emit(expenseToSave);
     } else {
