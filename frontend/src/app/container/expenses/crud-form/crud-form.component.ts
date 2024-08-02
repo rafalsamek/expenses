@@ -33,6 +33,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
+      id: [0, Validators.required],
       title: ['', Validators.required],
       description: [''],
       amount: [null, [Validators.required, Validators.min(0.01)]],
@@ -60,6 +61,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
   initializeForm() {
     if (this.expense) {
       this.form.setValue({
+        id: this.expense.id,
         title: this.expense.title,
         description: this.expense.description || '',
         amount: this.expense.amount / 100, // Display amount divided by 100
@@ -67,6 +69,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
       });
     } else {
       this.form.reset({
+        id: 0,
         title: '',
         description: '',
         amount: null,

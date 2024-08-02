@@ -6,6 +6,8 @@
 <expenses-crud-table
   [expensesList]="expensesList"
   (sortChanged)="onSortChanged($event.sortColumns, $event.sortDirections)"
+  (viewExpense)="openModal('view', $event)"
+  (editExpense)="openModal('edit', $event)"
 ></expenses-crud-table>
 <expenses-crud-pagination
   [totalElements]="totalElements"

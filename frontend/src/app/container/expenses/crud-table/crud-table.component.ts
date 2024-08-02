@@ -19,6 +19,8 @@ export class CrudTableComponent {
 
   sortColumn = 'id';
   sortDirection = 'asc';
+  @Output() editExpense = new EventEmitter<ExpenseEntity>();
+  @Output() viewExpense = new EventEmitter<ExpenseEntity>();
 
   changeSort(column: string): void {
     if (this.sortColumn === column) {
@@ -31,5 +33,13 @@ export class CrudTableComponent {
       sortColumns: this.sortColumn,
       sortDirections: this.sortDirection,
     });
+  }
+
+  view(expense: ExpenseEntity): void {
+    this.viewExpense.emit(expense);
+  }
+
+  edit(expense: ExpenseEntity): void {
+    this.editExpense.emit(expense);
   }
 }

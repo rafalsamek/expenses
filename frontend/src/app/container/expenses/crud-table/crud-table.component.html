@@ -85,8 +85,8 @@
         <td>{{ expense.createdAt }}</td>
         <td>{{ expense.updatedAt }}</td>
         <td class="action-buttons">
-          <button>View</button>
-          <button>Edit</button>
+          <button (click)="view(expense)">View</button>
+          <button (click)="edit(expense)">Edit</button>
           <button>Delete</button>
         </td>
       </tr>

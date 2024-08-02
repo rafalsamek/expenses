@@ -16,6 +16,12 @@
           <div *ngFor="let error of errorMessage">{{ error }}</div>
         </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <input
+            type="hidden"
+            id="id"
+            formControlName="id"
+            class="form-control"
+          />
           <div class="form-group">
             <label for="title">Title</label>
             <input
