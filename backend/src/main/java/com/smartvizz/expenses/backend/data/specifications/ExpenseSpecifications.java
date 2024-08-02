@@ -30,9 +30,11 @@ public class ExpenseSpecifications {
             predicateList.add(
                     builder.like(builder.lower(root.get("description")), "%" + searchBy.toLowerCase() + "%")
             );
-            predicateList.add(
-                    builder.equal(builder.toLong(root.get("amount")), Math.round(Float.parseFloat(searchBy) * 100))
-            );
+            if (isConvertibleToFloat(searchBy)) {
+                predicateList.add(
+                        builder.equal(builder.toLong(root.get("amount")), Math.round(Float.parseFloat(searchBy) * 100))
+                );
+            }
             predicateList.add(
                     builder.equal(builder.lower(root.get("currency")), searchBy.toLowerCase())
             );
@@ -45,5 +47,14 @@ public class ExpenseSpecifications {
 
             return builder.or(predicateList.toArray(new Predicate[]{}));
         };
+    }
+
+    private static boolean isConvertibleToFloat(String searchBy) {
+        try {
+            Float.parseFloat(searchBy);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
