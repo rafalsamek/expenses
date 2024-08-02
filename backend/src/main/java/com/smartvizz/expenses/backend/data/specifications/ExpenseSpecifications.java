@@ -31,7 +31,7 @@ public class ExpenseSpecifications {
                     builder.like(builder.lower(root.get("description")), "%" + searchBy.toLowerCase() + "%")
             );
             predicateList.add(
-                    builder.equal(builder.toString(root.get("amount")), searchBy)
+                    builder.equal(builder.toLong(root.get("amount")), Math.round(Float.parseFloat(searchBy) * 100))
             );
             predicateList.add(
                     builder.equal(builder.lower(root.get("currency")), searchBy.toLowerCase())
