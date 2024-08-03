@@ -21,6 +21,7 @@ export class CrudTableComponent {
   sortDirection = 'asc';
   @Output() editExpense = new EventEmitter<ExpenseEntity>();
   @Output() viewExpense = new EventEmitter<ExpenseEntity>();
+  @Output() deleteExpense = new EventEmitter<ExpenseEntity>();
 
   changeSort(column: string): void {
     if (this.sortColumn === column) {
@@ -41,5 +42,9 @@ export class CrudTableComponent {
 
   edit(expense: ExpenseEntity): void {
     this.editExpense.emit(expense);
+  }
+
+  delete(expense: ExpenseEntity): void {
+    this.deleteExpense.emit(expense);
   }
 }

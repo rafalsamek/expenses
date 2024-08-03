@@ -32,7 +32,7 @@ export class ExpensesComponent implements OnInit {
   searchBy = '';
 
   showModal = false;
-  modalMode: 'add' | 'edit' | 'view' = 'view';
+  modalMode: 'add' | 'edit' | 'view' | 'delete' = 'view'; // Include 'delete' mode
   selectedExpense: ExpenseEntity | null = null;
   errorMessage: string[] | null = null;
 
@@ -99,7 +99,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
 
-  openModal(mode: 'add' | 'edit' | 'view', expense?: ExpenseEntity) {
+  openModal(mode: 'add' | 'edit' | 'view' | 'delete', expense?: ExpenseEntity) {
     this.modalMode = mode;
     this.errorMessage = null; // Reset the error message when opening the modal
     if (mode === 'add') {
@@ -152,5 +152,20 @@ export class ExpensesComponent implements OnInit {
         }
       );
     }
+  }
+
+  deleteExpense(expense: ExpenseEntity) {
+    let expenseId = expense.id;
+    this.expenseService.deleteExpense(expenseId).subscribe(
+      () => {
+        this.expensesList = this.expensesList.filter((e) => e.id !== expenseId);
+        this.closeModal();
+      },
+      (error) => {
+        console.error('Error deleting expense', error);
+        this.errorMessage = error;
+        this.showModal = true;
+      }
+    );
   }
 }

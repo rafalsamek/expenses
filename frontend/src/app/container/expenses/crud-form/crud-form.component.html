@@ -15,7 +15,7 @@
         >
           <div *ngFor="let error of errorMessage">{{ error }}</div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form *ngIf="mode !== 'delete'" [formGroup]="form">
           <input
             type="hidden"
             id="id"
@@ -95,23 +95,33 @@
               >
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="closeModal()"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              *ngIf="mode !== 'view'"
-            >
-              {{ mode === 'add' ? 'Add' : 'Update' }}
-            </button>
-          </div>
         </form>
+        <div *ngIf="mode === 'delete'" class="alert alert-warning">
+          Are you sure you want to delete the expense titled
+          <strong>{{ expense?.title }}</strong
+          >?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          class="btn btn-primary"
+          *ngIf="mode === 'add' || mode === 'edit'"
+        >
+          {{ mode === 'add' ? 'Add' : 'Update' }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onSubmit()"
+          *ngIf="mode === 'delete'"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

@@ -22,11 +22,12 @@ import { ReactiveFormsModule } from '@angular/forms'; // Make sure to import Rea
 })
 export class CrudFormComponent implements OnInit, OnChanges {
   @Input() showModal = false;
-  @Input() mode: 'add' | 'edit' | 'view' = 'view';
+  @Input() mode: 'add' | 'edit' | 'view' | 'delete' = 'view';
   @Input() expense: ExpenseEntity | null = null;
   @Input() errorMessage: string[] | null = null;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<ExpenseEntity>();
+  @Output() delete = new EventEmitter<ExpenseEntity>();
 
   form: FormGroup;
   currencies: string[] = [];
@@ -77,7 +78,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
       });
     }
 
-    if (this.mode === 'view') {
+    if (this.mode === 'view' || this.mode === 'delete') {
       this.form.disable();
     } else {
       this.form.enable();
@@ -95,6 +96,11 @@ export class CrudFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+    if (this.mode === 'delete' && this.expense) {
+      this.deleteExpense(this.expense);
+      return;
+    }
+
     if (this.form.valid) {
       const formValue = this.form.value;
       const expenseToSave = {
@@ -107,11 +113,18 @@ export class CrudFormComponent implements OnInit, OnChanges {
     }
   }
 
+  deleteExpense(expense: ExpenseEntity) {
+    this.delete.emit(expense);
+    this.closeModal();
+  }
+
   getTitle(): string {
     if (this.mode === 'add') {
       return 'Add Expense';
     } else if (this.mode === 'edit') {
       return 'Edit Expense';
+    } else if (this.mode === 'delete') {
+      return 'Delete Expense';
     } else {
       return 'View Expense';
     }

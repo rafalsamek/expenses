@@ -76,6 +76,12 @@ export class ExpenseService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteExpense(expenseId: number): Observable<void> {
+    return this.httpClient
+      .delete<void>(`${this.apiUrl}/${expenseId}`)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string[] = ['An unknown error occurred!'];
     if (error.error instanceof ErrorEvent) {

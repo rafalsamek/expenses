@@ -8,6 +8,7 @@
   (sortChanged)="onSortChanged($event.sortColumns, $event.sortDirections)"
   (viewExpense)="openModal('view', $event)"
   (editExpense)="openModal('edit', $event)"
+  (deleteExpense)="openModal('delete', $event)"
 ></expenses-crud-table>
 <expenses-crud-pagination
   [totalElements]="totalElements"
@@ -24,4 +25,5 @@
   [errorMessage]="errorMessage"
   (close)="closeModal()"
   (save)="saveExpense($event)"
+  (delete)="deleteExpense($event)"
 ></expenses-crud-form>
