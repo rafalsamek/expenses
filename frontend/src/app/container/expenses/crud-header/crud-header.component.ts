@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgIconsModule, provideIcons } from '@ng-icons/core';
+import { heroPlus } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'expenses-crud-header',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgIconsModule],
   templateUrl: './crud-header.component.html',
   styleUrl: './crud-header.component.css',
+  providers: [provideIcons({ heroPlus })],
 })
 export class CrudHeaderComponent {
   @Input() searchBy = '';

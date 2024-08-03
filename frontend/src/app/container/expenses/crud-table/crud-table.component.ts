@@ -2,13 +2,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DecimalPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { CrudPaginationComponent } from '../crud-pagination/crud-pagination.component';
 import { ExpenseEntity } from '../expense-entity.model';
+import { provideIcons, NgIconsModule } from '@ng-icons/core';
+import { heroEye, heroPencilSquare, heroTrash } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'expenses-crud-table',
   standalone: true,
-  imports: [NgForOf, NgIf, CrudPaginationComponent, NgClass, DecimalPipe],
+  imports: [
+    NgForOf,
+    NgIf,
+    CrudPaginationComponent,
+    NgClass,
+    DecimalPipe,
+    NgIconsModule,
+  ],
   templateUrl: './crud-table.component.html',
   styleUrl: './crud-table.component.css',
+  providers: [provideIcons({ heroEye, heroPencilSquare, heroTrash })],
 })
 export class CrudTableComponent {
   @Input() expensesList: ExpenseEntity[] = [];
@@ -17,11 +27,12 @@ export class CrudTableComponent {
     sortDirections: string;
   }>();
 
-  sortColumn = 'id';
-  sortDirection = 'asc';
   @Output() editExpense = new EventEmitter<ExpenseEntity>();
   @Output() viewExpense = new EventEmitter<ExpenseEntity>();
   @Output() deleteExpense = new EventEmitter<ExpenseEntity>();
+
+  sortColumn = 'id';
+  sortDirection = 'asc';
 
   changeSort(column: string): void {
     if (this.sortColumn === column) {
