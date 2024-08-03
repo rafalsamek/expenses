@@ -127,7 +127,13 @@ export class ExpensesComponent implements OnInit {
     if (this.modalMode === 'add') {
       this.expenseService.addExpense(expense).subscribe(
         (newExpense) => {
-          this.expensesList.push(newExpense); // Add the new expense to the list
+          this.fetchExpenses(
+            this.pageNumber,
+            this.size,
+            this.sortColumns,
+            this.sortDirections,
+            this.searchBy
+          );
           this.closeModal();
         },
         (error) => {
@@ -155,10 +161,15 @@ export class ExpensesComponent implements OnInit {
   }
 
   deleteExpense(expense: ExpenseEntity) {
-    let expenseId = expense.id;
-    this.expenseService.deleteExpense(expenseId).subscribe(
+    this.expenseService.deleteExpense(expense.id).subscribe(
       () => {
-        this.expensesList = this.expensesList.filter((e) => e.id !== expenseId);
+        this.fetchExpenses(
+          this.pageNumber,
+          this.size,
+          this.sortColumns,
+          this.sortDirections,
+          this.searchBy
+        );
         this.closeModal();
       },
       (error) => {
