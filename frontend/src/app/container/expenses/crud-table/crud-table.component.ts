@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DecimalPipe, NgClass, NgForOf, NgIf } from '@angular/common';
-import { CrudPaginationComponent } from '../crud-pagination/crud-pagination.component';
 import { ExpenseEntity } from '../expense-entity.model';
 import { provideIcons, NgIconsModule } from '@ng-icons/core';
 import {
@@ -12,14 +11,7 @@ import {
 @Component({
   selector: 'expenses-crud-table',
   standalone: true,
-  imports: [
-    NgForOf,
-    NgIf,
-    CrudPaginationComponent,
-    NgClass,
-    DecimalPipe,
-    NgIconsModule,
-  ],
+  imports: [NgForOf, NgIf, NgClass, DecimalPipe, NgIconsModule],
   templateUrl: './crud-table.component.html',
   styleUrl: './crud-table.component.css',
   providers: [provideIcons({ heroEye, heroPencilSquare, heroTrash })],
