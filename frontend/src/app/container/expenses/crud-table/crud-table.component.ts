@@ -3,7 +3,11 @@ import { DecimalPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { CrudPaginationComponent } from '../crud-pagination/crud-pagination.component';
 import { ExpenseEntity } from '../expense-entity.model';
 import { provideIcons, NgIconsModule } from '@ng-icons/core';
-import { heroEye, heroPencilSquare, heroTrash } from '@ng-icons/heroicons/outline';
+import {
+  heroEye,
+  heroPencilSquare,
+  heroTrash,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'expenses-crud-table',
