@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WalletsComponent } from './wallets.component';
+import { CrudFormComponent } from './crud-form.component';
 
-describe('WalletsComponent', () => {
-  let component: WalletsComponent;
-  let fixture: ComponentFixture<WalletsComponent>;
+describe('CrudFormComponent', () => {
+  let component: CrudFormComponent;
+  let fixture: ComponentFixture<CrudFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WalletsComponent],
+      imports: [CrudFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WalletsComponent);
+    fixture = TestBed.createComponent(CrudFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

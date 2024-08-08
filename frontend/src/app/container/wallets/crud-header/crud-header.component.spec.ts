@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WalletsComponent } from './wallets.component';
+import { CrudHeaderComponent } from './crud-header.component';
 
-describe('WalletsComponent', () => {
-  let component: WalletsComponent;
-  let fixture: ComponentFixture<WalletsComponent>;
+describe('CrudHeaderComponent', () => {
+  let component: CrudHeaderComponent;
+  let fixture: ComponentFixture<CrudHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WalletsComponent],
+      imports: [CrudHeaderComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WalletsComponent);
+    fixture = TestBed.createComponent(CrudHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

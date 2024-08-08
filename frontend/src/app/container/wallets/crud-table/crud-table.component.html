@@ -1,0 +1,96 @@
+<table class="crud-table">
+  <thead>
+    <tr>
+      <th
+        class="id sortable"
+        (click)="changeSort('id')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'id' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'id' && sortDirection === 'desc',
+        }"
+      >
+        ID
+      </th>
+      <th
+        class="name sortable"
+        (click)="changeSort('name')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'name' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'name' && sortDirection === 'desc',
+        }"
+      >
+        Name
+      </th>
+      <th
+        class="description sortable"
+        (click)="changeSort('description')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'description' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'description' && sortDirection === 'desc',
+        }"
+      >
+        Description
+      </th>
+      <th
+        class="currency sortable"
+        (click)="changeSort('currency')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'currency' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'currency' && sortDirection === 'desc',
+        }"
+      >
+        Currency
+      </th>
+      <th
+        class="createdAt sortable"
+        (click)="changeSort('createdAt')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'createdAt' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'createdAt' && sortDirection === 'desc',
+        }"
+      >
+        Created At
+      </th>
+      <th
+        class="updatedAt sortable"
+        (click)="changeSort('updatedAt')"
+        [ngClass]="{
+          sortAsc: sortColumn === 'updatedAt' && sortDirection === 'asc',
+          sortDesc: sortColumn === 'updatedAt' && sortDirection === 'desc',
+        }"
+      >
+        Updated At
+      </th>
+      <th class="actions">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="walletsList.length; else noWallets">
+      <tr *ngFor="let wallet of walletsList; let i = index">
+        <td>{{ wallet.id }}</td>
+        <td>{{ wallet.name }}</td>
+        <td>{{ wallet.description }}</td>
+        <td>{{ wallet.currency }}</td>
+        <td>{{ wallet.createdAt }}</td>
+        <td>{{ wallet.updatedAt }}</td>
+        <td class="actions">
+          <button (click)="view(wallet)" class="btn btn-icon" title="View">
+            <ng-icon name="heroEye"></ng-icon>
+          </button>
+          <button (click)="edit(wallet)" class="btn btn-icon" title="Edit">
+            <ng-icon name="heroPencilSquare"></ng-icon>
+          </button>
+          <button (click)="delete(wallet)" class="btn btn-icon" title="Delete">
+            <ng-icon name="heroTrash"></ng-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <ng-template #noWallets>
+      <tr>
+        <td colspan="8" style="text-align: center">No Wallets</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>

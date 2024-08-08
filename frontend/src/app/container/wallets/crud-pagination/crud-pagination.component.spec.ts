@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WalletsComponent } from './wallets.component';
+import { CrudPaginationComponent } from './crud-pagination.component';
 
-describe('WalletsComponent', () => {
-  let component: WalletsComponent;
-  let fixture: ComponentFixture<WalletsComponent>;
+describe('PaginationComponent', () => {
+  let component: CrudPaginationComponent;
+  let fixture: ComponentFixture<CrudPaginationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WalletsComponent],
+      imports: [CrudPaginationComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WalletsComponent);
+    fixture = TestBed.createComponent(CrudPaginationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,1 +1,29 @@
-<p>wallets works!</p>
+<wallets-crud-header
+  (searchChanged)="onSearchChanged($event)"
+  (addWallet)="openModal('add')"
+>
+</wallets-crud-header>
+<wallets-crud-table
+  [walletsList]="walletsList"
+  (sortChanged)="onSortChanged($event.sortColumns, $event.sortDirections)"
+  (viewWallet)="openModal('view', $event)"
+  (editWallet)="openModal('edit', $event)"
+  (deleteWallet)="openModal('delete', $event)"
+></wallets-crud-table>
+<wallets-crud-pagination
+  [totalElements]="totalElements"
+  [size]="size"
+  [pageNumber]="pageNumber"
+  (pageChanged)="onPageChanged($event)"
+></wallets-crud-pagination>
+
+<wallets-crud-form
+  *ngIf="showModal"
+  [showModal]="showModal"
+  [mode]="modalMode"
+  [wallet]="selectedWallet"
+  [errorMessage]="errorMessage"
+  (close)="closeModal()"
+  (save)="saveWallet($event)"
+  (delete)="deleteWallet($event)"
+></wallets-crud-form>
