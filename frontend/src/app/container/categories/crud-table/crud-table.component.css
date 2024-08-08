@@ -38,24 +38,14 @@ td {
   width: 5%;
 }
 
-.crud-table th.title,
-.crud-table td.title {
+.crud-table th.name,
+.crud-table td.name {
   width: 15%;
 }
 
 .crud-table th.description,
 .crud-table td.description {
   width: 20%;
-}
-
-.crud-table th.amount,
-.crud-table td.amount {
-  width: 10%;
-}
-
-.crud-table th.currency,
-.crud-table td.currency {
-  width: 10%;
 }
 
 .crud-table th.createdAt,
