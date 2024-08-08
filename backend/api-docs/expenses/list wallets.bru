@@ -1,0 +1,26 @@
+meta {
+  name: list wallets
+  type: http
+  seq: 14
+}
+
+get {
+  url: http://localhost:8880/api/wallets?sortColumns=id&sortDirections=asc
+  body: none
+  auth: none
+}
+
+params:query {
+  sortColumns: id
+  sortDirections: asc
+}
+
+body:json {
+  {
+    "id": 1,
+    "title": "śniadanie",
+    "description": "zakupy na śniadanie",
+    "amount": 40,
+    "currency": "PLN"
+  }
+}

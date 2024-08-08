@@ -1,0 +1,19 @@
+meta {
+  name: update wallet
+  type: http
+  seq: 13
+}
+
+put {
+  url: http://localhost:8880/api/wallets/6
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Revolut GBP",
+    "description": "Revolut UAP, currency GBP",
+    "currency": "GBP"
+  }
+}
