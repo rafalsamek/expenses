@@ -1,0 +1,101 @@
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+.crud-table table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+.crud-table th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+.crud-table th {
+  background-color: #f2f2f2;
+}
+
+.crud-table th.sortable {
+  cursor: pointer;
+}
+
+.crud-table th.sortAsc::after {
+  content: ' \25B2'; /* Unicode for up arrow */
+}
+
+.crud-table th.sortDesc::after {
+  content: ' \25BC'; /* Unicode for down arrow */
+}
+
+/* Fixed widths for columns */
+.crud-table th.id,
+.crud-table td.id {
+  width: 5%;
+}
+
+.crud-table th.title,
+.crud-table td.title {
+  width: 15%;
+}
+
+.crud-table th.description,
+.crud-table td.description {
+  width: 20%;
+}
+
+.crud-table th.amount,
+.crud-table td.amount {
+  width: 10%;
+}
+
+.crud-table th.currency,
+.crud-table td.currency {
+  width: 10%;
+}
+
+.crud-table th.createdAt,
+.crud-table td.createdAt {
+  width: 15%;
+}
+
+.crud-table th.updatedAt,
+.crud-table td.updatedAt {
+  width: 15%;
+}
+
+.crud-table th.actions,
+.crud-table td.actions {
+  width: 10%;
+}
+
+.crud-table td.actions {
+  gap: 5px;
+  text-align: center;
+}
+
+.crud-table button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  margin: 2px;
+  font-size: 0.8rem;
+  border: 1px solid #f2f2f2;
+  background-color: #7499d4;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.crud-table button:hover {
+  background-color: #eaeaea;
+  color: #333;
+}

@@ -1,0 +1,42 @@
+.crud-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.crud-pagination button,
+.crud-pagination .page-input {
+  padding: 5px 10px;
+  font-size: 16px;
+  margin: 0 5px;
+  border: 1px solid #f2f2f2;
+  background-color: #7499d4;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners for the crud-pagination buttons */
+}
+
+.crud-pagination .page-input {
+  width: 60px;
+  text-align: center;
+}
+
+.crud-pagination .page-info {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #333;
+}
+
+.crud-pagination .page-info #number-of-pages {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+.crud-pagination .page-input {
+  background-color: #f4f4f4;
+  color: #333;
+  border-radius: 5px; /* Rounded corners for the crud-pagination page numbers */
+}

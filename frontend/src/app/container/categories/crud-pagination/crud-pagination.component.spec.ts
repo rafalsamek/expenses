@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoriesComponent } from './categories.component';
+import { CrudPaginationComponent } from './crud-pagination.component';
 
-describe('CategoriesComponent', () => {
-  let component: CategoriesComponent;
-  let fixture: ComponentFixture<CategoriesComponent>;
+describe('PaginationComponent', () => {
+  let component: CrudPaginationComponent;
+  let fixture: ComponentFixture<CrudPaginationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoriesComponent],
+      imports: [CrudPaginationComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CategoriesComponent);
+    fixture = TestBed.createComponent(CrudPaginationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
