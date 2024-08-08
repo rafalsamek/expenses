@@ -1,0 +1,21 @@
+meta {
+  name: delete category
+  type: http
+  seq: 11
+}
+
+delete {
+  url: http://localhost:8880/api/expenses/1
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1,
+    "title": "śniadanie",
+    "description": "zakupy na śniadanie",
+    "amount": 40,
+    "currency": "PLN"
+  }
+}

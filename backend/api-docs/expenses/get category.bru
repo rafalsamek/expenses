@@ -1,0 +1,21 @@
+meta {
+  name: get category
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:8880/api/categories/1
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1,
+    "title": "śniadanie",
+    "description": "zakupy na śniadanie",
+    "amount": 40,
+    "currency": "PLN"
+  }
+}
