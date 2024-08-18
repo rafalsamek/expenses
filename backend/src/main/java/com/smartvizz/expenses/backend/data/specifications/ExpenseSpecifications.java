@@ -1,9 +1,9 @@
 package com.smartvizz.expenses.backend.data.specifications;
 
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ExpenseSpecifications {
             List<Predicate> predicateList = new ArrayList<>();
 
             predicateList.add(
-                        builder.equal(builder.toString(root.get("id")), searchBy)
+                    builder.equal(builder.toString(root.get("id")), searchBy)
             );
             predicateList.add(
                     builder.like(builder.lower(root.get("title")), "%" + searchBy.toLowerCase() + "%")
@@ -44,8 +44,15 @@ public class ExpenseSpecifications {
             predicateList.add(
                     builder.like(builder.toString(root.get("updatedAt")), "%" + searchBy + "%")
             );
+            Join<?, ?> walletJoin = root.join("wallet");
+            predicateList.add(
+                    builder.like(builder.lower(walletJoin.get("name")), "%" + searchBy.toLowerCase() + "%")
+            );
+            predicateList.add(
+                    builder.like(builder.lower(walletJoin.get("description")), "%" + searchBy.toLowerCase() + "%")
+            );
 
-            return builder.or(predicateList.toArray(new Predicate[]{}));
+            return builder.or(predicateList.toArray(new Predicate[0]));
         };
     }
 

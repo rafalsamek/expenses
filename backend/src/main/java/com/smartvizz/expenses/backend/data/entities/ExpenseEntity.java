@@ -181,14 +181,18 @@ public class ExpenseEntity {
     private String title;
 
     @Column(nullable = true, length = 1000)
-    String description;
+    private String description;
 
     @Column(nullable = false)
-    Long amount;
+    private Long amount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 3, columnDefinition = "VARCHAR(3) DEFAULT 'PLN'")
-    Currency currency;
+    private Currency currency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "BIGINT DEFAULT 1")
+    private WalletEntity wallet;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
@@ -198,15 +202,15 @@ public class ExpenseEntity {
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updatedAt;
 
-    public ExpenseEntity(String title, String description, Long amount, Currency currency) {
+    public ExpenseEntity(String title, String description, Long amount, Currency currency, WalletEntity wallet) {
         this.title = title;
         this.description = description;
         this.amount = amount;
         this.currency = currency;
+        this.wallet = wallet;
     }
 
     public ExpenseEntity() {
-
     }
 
     public Long getId() {
@@ -247,6 +251,14 @@ public class ExpenseEntity {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public WalletEntity getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(WalletEntity wallet) {
+        this.wallet = wallet;
     }
 
     public Instant getCreatedAt() {
