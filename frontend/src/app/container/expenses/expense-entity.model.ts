@@ -1,9 +1,13 @@
+import { WalletEntity } from './wallet-entity.model';
+
 export interface ExpenseEntity {
   id: number;
   title: string;
   description?: string;
   amount: number;
   currency: string;
+  walletId: number; // This is used for POST/PUT
+  wallet?: WalletEntity; // This is populated when fetching data
   createdAt?: string;
   updatedAt?: string;
 }
