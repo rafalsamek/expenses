@@ -56,7 +56,13 @@ export class CategoriesComponent implements OnInit {
     searchBy: string
   ): void {
     this.categoryService
-      .getCategories(pageNumber - 1, size, sortColumns, sortDirections, searchBy)
+      .getCategories(
+        pageNumber - 1,
+        size,
+        sortColumns,
+        sortDirections,
+        searchBy
+      )
       .subscribe((response) => {
         this.categoriesList = response.content;
         this.totalElements = response.totalElements;
@@ -99,7 +105,10 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  openModal(mode: 'add' | 'edit' | 'view' | 'delete', category?: CategoryEntity) {
+  openModal(
+    mode: 'add' | 'edit' | 'view' | 'delete',
+    category?: CategoryEntity
+  ) {
     this.modalMode = mode;
     this.errorMessage = null; // Reset the error message when opening the modal
     if (mode === 'add') {
@@ -145,7 +154,9 @@ export class CategoriesComponent implements OnInit {
     } else if (this.modalMode === 'edit') {
       this.categoryService.updateCategory(category).subscribe(
         (updatedCategory) => {
-          const index = this.categoriesList.findIndex((e) => e.id === category.id);
+          const index = this.categoriesList.findIndex(
+            (e) => e.id === category.id
+          );
           if (index !== -1) {
             this.categoriesList[index] = updatedCategory; // Update the existing category in the list
           }
