@@ -64,7 +64,7 @@ public class CategoryService {
         );
     }
 
-    public CategoryResponse fetchOne(Long id) {
+    public CategoryResponse fetchOne(long id) {
         return categoryRepository.findById(id)
                 .map(CategoryResponse::new)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
@@ -80,7 +80,7 @@ public class CategoryService {
         return new CategoryResponse(savedCategory);
     }
 
-    public CategoryResponse update(Long id, CategoryRequest request) {
+    public CategoryResponse update(long id, CategoryRequest request) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
 
@@ -91,7 +91,7 @@ public class CategoryService {
         return new CategoryResponse(updatedCategory);
     }
 
-    public void delete(Long id) {
+    public void delete(long id) {
         if (!categoryRepository.existsById(id)) {
             throw new NotFoundException("Category not found with id: " + id);
         }

@@ -11,8 +11,8 @@ import java.time.Instant;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long id;
+    @Column(nullable = false, updatable = false, columnDefinition = "INT UNSIGNED")
+    private long id;
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -37,11 +37,11 @@ public class CategoryEntity {
 
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

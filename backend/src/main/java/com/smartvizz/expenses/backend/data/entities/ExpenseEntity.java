@@ -174,8 +174,8 @@ public class ExpenseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long id;
+    @Column(nullable = false, updatable = false, columnDefinition = "BIGINT UNSIGNED")
+    private long id;
 
     @Column(nullable = false, length = 255)
     private String title;
@@ -183,15 +183,15 @@ public class ExpenseEntity {
     @Column(nullable = true, length = 1000)
     private String description;
 
-    @Column(nullable = false)
-    private Long amount;
+    @Column(nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    private long amount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 3, columnDefinition = "VARCHAR(3) DEFAULT 'PLN'")
     private Currency currency;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "BIGINT DEFAULT 1")
+    @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private WalletEntity wallet;
 
     @CreationTimestamp
@@ -202,7 +202,7 @@ public class ExpenseEntity {
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updatedAt;
 
-    public ExpenseEntity(String title, String description, Long amount, Currency currency, WalletEntity wallet) {
+    public ExpenseEntity(String title, String description, long amount, Currency currency, WalletEntity wallet) {
         this.title = title;
         this.description = description;
         this.amount = amount;
@@ -213,11 +213,11 @@ public class ExpenseEntity {
     public ExpenseEntity() {
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -237,11 +237,11 @@ public class ExpenseEntity {
         this.description = description;
     }
 
-    public Long getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

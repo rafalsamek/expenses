@@ -64,7 +64,7 @@ public class WalletService {
         );
     }
 
-    public WalletResponse fetchOne(Long id) {
+    public WalletResponse fetchOne(int id) {
         return walletRepository.findById(id)
                 .map(WalletResponse::new)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
@@ -81,7 +81,7 @@ public class WalletService {
         return new WalletResponse(savedWallet);
     }
 
-    public WalletResponse update(Long id, WalletRequest request) {
+    public WalletResponse update(int id, WalletRequest request) {
         WalletEntity walletEntity = walletRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
 
@@ -93,7 +93,7 @@ public class WalletService {
         return new WalletResponse(updatedWallet);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         if (!walletRepository.existsById(id)) {
             throw new NotFoundException("Wallet not found with id: " + id);
         }

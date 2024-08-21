@@ -33,7 +33,7 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CategoryResponse> get(@PathVariable Long id) {
+    public ResponseEntity<CategoryResponse> get(@PathVariable long id) {
         CategoryResponse category = categoryService.fetchOne(id);
         return ResponseEntity.ok(category);
     }
@@ -45,13 +45,13 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
+    public ResponseEntity<CategoryResponse> update(@PathVariable long id, @Valid @RequestBody CategoryRequest request) {
         CategoryResponse updatedCategory = categoryService.update(id, request);
         return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
     }

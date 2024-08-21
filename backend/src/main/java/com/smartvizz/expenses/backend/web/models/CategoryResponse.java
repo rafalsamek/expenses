@@ -5,7 +5,7 @@ import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import java.time.Instant;
 
 public record CategoryResponse(
-                                Long id,
+                                long id,
                                 String name,
                                 String description,
                                 Instant createdAt,

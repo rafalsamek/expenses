@@ -33,7 +33,7 @@ public class WalletController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<WalletResponse> get(@PathVariable Long id) {
+    public ResponseEntity<WalletResponse> get(@PathVariable int id) {
         WalletResponse wallet = walletService.fetchOne(id);
         return ResponseEntity.ok(wallet);
     }
@@ -45,13 +45,13 @@ public class WalletController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<WalletResponse> update(@PathVariable Long id, @Valid @RequestBody WalletRequest request) {
+    public ResponseEntity<WalletResponse> update(@PathVariable int id, @Valid @RequestBody WalletRequest request) {
         WalletResponse updatedWallet = walletService.update(id, request);
         return ResponseEntity.ok(updatedWallet);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         walletService.delete(id);
         return ResponseEntity.noContent().build();
     }

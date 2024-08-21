@@ -34,7 +34,7 @@ public class ExpenseController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ExpenseResponse> get(@PathVariable Long id) {
+    public ResponseEntity<ExpenseResponse> get(@PathVariable long id) {
         ExpenseResponse expense = expenseService.fetchOne(id);
         return ResponseEntity.ok(expense);
     }
@@ -46,13 +46,13 @@ public class ExpenseController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ExpenseResponse> update(@PathVariable Long id, @Valid @RequestBody ExpenseRequest request) {
+    public ResponseEntity<ExpenseResponse> update(@PathVariable long id, @Valid @RequestBody ExpenseRequest request) {
         ExpenseResponse updatedExpense = expenseService.update(id, request);
         return ResponseEntity.ok(updatedExpense);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         expenseService.delete(id);
         return ResponseEntity.noContent().build();
     }

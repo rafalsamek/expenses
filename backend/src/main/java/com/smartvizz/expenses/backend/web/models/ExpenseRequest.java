@@ -15,13 +15,13 @@ public record ExpenseRequest(
 
         @NotNull(message = "Amount is required")
         @Min(value = 1, message = "Amount must be greater than 0")
-        Long amount,
+        long amount,
 
         @NotNull(message = "Currency is required")
         Currency currency,
 
         @NotNull(message = "Wallet ID is required")
         @Min(value = 1, message = "Wallet ID must be greater than 0")
-        Long walletId
+        int walletId
 ) {
 }

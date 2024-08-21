@@ -68,7 +68,7 @@ public class ExpenseService {
         );
     }
 
-    public ExpenseResponse fetchOne(Long id) {
+    public ExpenseResponse fetchOne(long id) {
         return expenseRepository.findById(id)
                 .map(ExpenseResponse::new)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
@@ -90,7 +90,7 @@ public class ExpenseService {
         return new ExpenseResponse(savedExpense);
     }
 
-    public ExpenseResponse update(Long id, ExpenseRequest request) {
+    public ExpenseResponse update(long id, ExpenseRequest request) {
         ExpenseEntity expenseEntity = expenseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
 
@@ -107,7 +107,7 @@ public class ExpenseService {
         return new ExpenseResponse(updatedExpense);
     }
 
-    public void delete(Long id) {
+    public void delete(long id) {
         if (!expenseRepository.existsById(id)) {
             throw new NotFoundException("Expense not found with id: " + id);
         }

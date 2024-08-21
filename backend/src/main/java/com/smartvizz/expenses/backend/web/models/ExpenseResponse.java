@@ -5,10 +5,10 @@ import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
 import java.time.Instant;
 
 public record ExpenseResponse(
-        Long id,
+        long id,
         String title,
         String description,
-        Long amount,
+        long amount,
         ExpenseEntity.Currency currency,
         WalletResponse wallet,
         Instant createdAt,
