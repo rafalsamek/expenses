@@ -191,7 +191,7 @@ public class ExpenseEntity {
     private Currency currency;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "TINYINT UNSIGNED")
+    @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "TINYINT UNSIGNED DEFAULT 1")
     private WalletEntity wallet;
 
     @CreationTimestamp
