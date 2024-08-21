@@ -1,3 +1,5 @@
+USE expenses;
+
 ALTER TABLE expenses
     DROP FOREIGN KEY fk_wallet_id;
 

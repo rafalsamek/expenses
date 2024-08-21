@@ -1,3 +1,5 @@
+USE expenses;
+
 CREATE TABLE expenses (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           title VARCHAR(255) NOT NULL,

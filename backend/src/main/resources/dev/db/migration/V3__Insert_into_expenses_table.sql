@@ -1,3 +1,5 @@
+USE expenses;
+
 INSERT INTO expenses (title, description, amount, currency) VALUES ('lunch', 'zakupy na lunch', 2500, 'EUR');
 INSERT INTO expenses (title, description, amount, currency) VALUES ('przekąska', 'zakupy na przekąski', 1500, 'GBP');
 INSERT INTO expenses (title, description, amount) VALUES ('deser', 'zakupy na deser', 1000);

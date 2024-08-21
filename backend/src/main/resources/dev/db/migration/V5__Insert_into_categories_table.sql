@@ -1,3 +1,5 @@
+USE expenses;
+
 INSERT INTO categories (name, description) VALUES ('Groceries', 'Expenses related to food and household supplies');
 INSERT INTO categories (name, description) VALUES ('Rent', 'Monthly housing rent payments');
 INSERT INTO categories (name, description) VALUES ('Utilities', 'Payments for electricity, water, gas, etc.');
