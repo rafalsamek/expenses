@@ -69,7 +69,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
   }
 
   loadWallets() {
-    this.walletService.getWallets(0, 100, 'id', 'asc', '').subscribe({
+    this.walletService.getWallets(0, 255, 'id', 'asc', '').subscribe({
       next: (response) => {
         this.wallets = response.content;
 
