@@ -1,5 +1,6 @@
 package com.smartvizz.expenses.backend.data.specifications;
 
+import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
@@ -51,7 +52,13 @@ public class ExpenseSpecifications {
             predicateList.add(
                     builder.like(builder.lower(walletJoin.get("description")), "%" + searchBy.toLowerCase() + "%")
             );
-
+            Join<ExpenseEntity, CategoryEntity> categoryJoin = root.join("categories");
+            predicateList.add(
+                    builder.like(builder.lower(categoryJoin.get("name")), "%" + searchBy.toLowerCase() + "%")
+            );
+            predicateList.add(
+                    builder.like(builder.lower(categoryJoin.get("description")), "%" + searchBy.toLowerCase() + "%")
+            );
             return builder.or(predicateList.toArray(new Predicate[0]));
         };
     }

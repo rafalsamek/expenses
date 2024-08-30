@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 public record ExpenseRequest(
         @NotNull(message = "Title is required")
         @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters")
@@ -22,6 +24,8 @@ public record ExpenseRequest(
 
         @NotNull(message = "Wallet ID is required")
         @Min(value = 1, message = "Wallet ID must be greater than 0")
-        int walletId
+        int walletId,
+
+        List<Long> categoryIds
 ) {
 }

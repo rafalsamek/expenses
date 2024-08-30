@@ -2,6 +2,8 @@
 package com.smartvizz.expenses.backend.data.specifications;
 
 import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
+import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -35,6 +37,13 @@ public class CategorySpecifications {
             );
             predicateList.add(
                     builder.like(builder.toString(root.get("updatedAt")), "%" + searchBy + "%")
+            );
+            Join<CategoryEntity, ExpenseEntity> expenseJoin = root.join("expenses");
+            predicateList.add(
+                    builder.like(builder.lower(expenseJoin.get("title")), "%" + searchBy.toLowerCase() + "%")
+            );
+            predicateList.add(
+                    builder.like(builder.lower(expenseJoin.get("description")), "%" + searchBy.toLowerCase() + "%")
             );
 
             return builder.or(predicateList.toArray(new Predicate[]{}));

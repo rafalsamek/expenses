@@ -1,8 +1,10 @@
 package com.smartvizz.expenses.backend.services;
 
+import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
 import com.smartvizz.expenses.backend.data.entities.WalletEntity;
 import com.smartvizz.expenses.backend.data.repositories.ExpenseRepository;
+import com.smartvizz.expenses.backend.data.repositories.CategoryRepository;
 import com.smartvizz.expenses.backend.data.repositories.WalletRepository;
 import com.smartvizz.expenses.backend.data.specifications.ExpenseSpecifications;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
@@ -24,11 +26,17 @@ public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final WalletRepository walletRepository;
+    private final CategoryRepository categoryRepository;
     private static final Logger logger = LoggerFactory.getLogger(ExpenseService.class);
 
-    public ExpenseService(ExpenseRepository expenseRepository, WalletRepository walletRepository) {
+    public ExpenseService(
+            ExpenseRepository expenseRepository,
+            WalletRepository walletRepository,
+            CategoryRepository categoryRepository
+    ) {
         this.expenseRepository = expenseRepository;
         this.walletRepository = walletRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public PageDTO<ExpenseResponse> fetchAll(
@@ -86,8 +94,7 @@ public class ExpenseService {
                 walletEntity
         );
 
-        ExpenseEntity savedExpense = expenseRepository.save(expenseEntity);
-        return new ExpenseResponse(savedExpense);
+        return getExpenseResponse(request, expenseEntity);
     }
 
     public ExpenseResponse update(long id, ExpenseRequest request) {
@@ -103,7 +110,20 @@ public class ExpenseService {
         expenseEntity.setCurrency(request.currency());
         expenseEntity.setWallet(walletEntity);
 
+        return getExpenseResponse(request, expenseEntity);
+    }
+
+    private ExpenseResponse getExpenseResponse(ExpenseRequest request, ExpenseEntity expenseEntity) {
+        if (request.categoryIds() != null) {
+            List<CategoryEntity> categories = request.categoryIds().stream()
+                    .map(categoryId -> categoryRepository.findById(categoryId)
+                            .orElseThrow(() -> new NotFoundException("Category not found with id: " + categoryId)))
+                    .toList();
+            expenseEntity.setCategories(new ArrayList<>(categories));
+        }
+
         ExpenseEntity updatedExpense = expenseRepository.save(expenseEntity);
+
         return new ExpenseResponse(updatedExpense);
     }
 

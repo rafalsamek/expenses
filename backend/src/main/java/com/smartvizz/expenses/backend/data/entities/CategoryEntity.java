@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -27,6 +29,9 @@ public class CategoryEntity {
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updatedAt;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<ExpenseEntity> expenses = new ArrayList<>();
 
     public CategoryEntity(String name, String description) {
         this.name = name;
@@ -75,5 +80,13 @@ public class CategoryEntity {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<ExpenseEntity> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<ExpenseEntity> expenses) {
+        this.expenses = expenses;
     }
 }
