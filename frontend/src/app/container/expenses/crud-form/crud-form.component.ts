@@ -14,6 +14,8 @@ import { ExpenseEntity, Currency } from '../expense-entity.model';
 import { WalletEntity } from '../wallet-entity.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WalletService } from '../wallet.service';
+import { CategoryEntity } from '../category-entity.model';
+import { CategoryService } from '../category.service'; // Import CategoryService
 
 @Component({
   selector: 'expenses-crud-form',
@@ -34,10 +36,12 @@ export class CrudFormComponent implements OnInit, OnChanges {
   form: FormGroup;
   currencies: string[] = [];
   wallets: WalletEntity[] = [];
+  categories: CategoryEntity[] = []; // Add a property to hold categories
 
   constructor(
     private fb: FormBuilder,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private categoryService: CategoryService // Inject CategoryService
   ) {
     this.form = this.fb.group({
       id: [0, Validators.required],
@@ -46,12 +50,14 @@ export class CrudFormComponent implements OnInit, OnChanges {
       amount: [null, [Validators.required, Validators.min(0.01)]],
       currency: ['PLN', Validators.required],
       wallet: [null, Validators.required], // This will hold the WalletEntity ID
+      categories: [[], Validators.required], // New field for categories
     });
   }
 
   ngOnInit() {
     this.currencies = Object.keys(Currency).filter((key) => isNaN(Number(key)));
     this.loadWallets();
+    this.loadCategories(); // Load categories on init
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,11 +78,18 @@ export class CrudFormComponent implements OnInit, OnChanges {
     this.walletService.getWallets(0, 255, 'id', 'asc', '').subscribe({
       next: (response) => {
         this.wallets = response.content;
-
-        // After wallets are loaded, patch the form with expense data
-        this.patchFormWithExpense();
+        this.patchFormWithExpense(); // After wallets are loaded, patch the form with expense data
       },
       error: (err) => console.error('Failed to load wallets', err),
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (response) => {
+        this.categories = response.content;
+      },
+      error: (err) => console.error('Failed to load categories', err),
     });
   }
 
@@ -89,6 +102,8 @@ export class CrudFormComponent implements OnInit, OnChanges {
         amount: this.expense.amount / 100, // Convert amount from cents to units
         currency: this.expense.currency,
         wallet: this.expense.wallet?.id || this.wallets[0]?.id || null, // Use wallet.id
+        categories:
+          this.expense.categories?.map((category) => category.id) || [], // Patch categories field
       });
     } else {
       this.form.reset({
@@ -98,6 +113,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
         amount: null,
         currency: 'PLN',
         wallet: this.wallets[0]?.id || null, // Default to the first wallet or null
+        categories: [], // Default to empty array for categories
       });
     }
 
@@ -135,6 +151,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
         amount: Math.round(formValue.amount * 100), // Convert amount to cents
         currency: formValue.currency,
         walletId: formValue.wallet, // Use walletId for submission
+        categoryIds: formValue.categories, // Add categories IDs for submission
       };
 
       this.save.emit(expenseToSave); // Emit the object with walletId

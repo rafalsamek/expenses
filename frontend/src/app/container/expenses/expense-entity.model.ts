@@ -1,4 +1,5 @@
 import { WalletEntity } from './wallet-entity.model';
+import { CategoryEntity } from './category-entity.model'; // Add this import
 
 export interface ExpenseEntity {
   id: number;
@@ -8,6 +9,8 @@ export interface ExpenseEntity {
   currency: string;
   walletId: number; // This is used for POST/PUT
   wallet?: WalletEntity; // This is populated when fetching data
+  categoryIds?: number[]; // Add this new field for categories
+  categories?: CategoryEntity[]; // This is populated when fetching data
   createdAt?: string;
   updatedAt?: string;
 }
