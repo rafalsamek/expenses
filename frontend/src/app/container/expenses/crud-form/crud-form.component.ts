@@ -75,7 +75,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
   }
 
   loadWallets() {
-    this.walletService.getWallets(0, 255, 'id', 'asc', '').subscribe({
+    this.walletService.getWallets().subscribe({
       next: (response) => {
         this.wallets = response.content;
         this.patchFormWithExpense(); // After wallets are loaded, patch the form with expense data
@@ -88,6 +88,7 @@ export class CrudFormComponent implements OnInit, OnChanges {
     this.categoryService.getCategories().subscribe({
       next: (response) => {
         this.categories = response.content;
+        this.patchFormWithExpense(); // After categories are loaded, patch the form with expense data
       },
       error: (err) => console.error('Failed to load categories', err),
     });

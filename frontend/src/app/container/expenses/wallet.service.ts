@@ -45,11 +45,11 @@ export class WalletService {
   }
 
   getWallets(
-    page: number,
-    size: number,
-    sortColumns: string,
-    sortDirections: string,
-    searchBy: string
+    page: number = 0,
+    size: number = 255,
+    sortColumns: string = 'id',
+    sortDirections: string = 'asc',
+    searchBy: string = ''
   ): Observable<WalletResponse> {
     return this.httpClient
       .get<WalletResponse>(

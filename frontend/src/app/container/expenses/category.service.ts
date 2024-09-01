@@ -46,7 +46,7 @@ export class CategoryService {
 
   getCategories(
     page: number = 0,
-    size: number = 255,
+    size: number = 2147483647,
     sortColumns: string = 'id',
     sortDirections: string = 'asc',
     searchBy: string = ''
