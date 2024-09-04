@@ -5,9 +5,11 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/auth/activate
-  params {
-    code: "<activation_code>"
-  }
+  url: {{baseUrl}}/api/auth/activate?code=9ebfa031-573d-48a1-872a-926cb4a5e041
+  body: none
   auth: none
+}
+
+params:query {
+  code: 9ebfa031-573d-48a1-872a-926cb4a5e041
 }
