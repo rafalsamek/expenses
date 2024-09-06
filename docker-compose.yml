@@ -17,6 +17,19 @@ services:
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: ${ENV}
+
+      # JWT settings
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+
+      # Mail server settings
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH}
+      MAIL_SMTP_STARTTLS_ENABLE: ${MAIL_SMTP_STARTTLS_ENABLE}
+
     volumes:
       - ./backend/src:/app/src  # Mount only the source directory
     networks:
