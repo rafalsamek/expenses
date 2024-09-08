@@ -44,6 +44,19 @@ dependencies {
 	// H2 database for testing
 	testImplementation 'com.h2database:h2'
 
+	// Upgrade Guava to 32.0.1-android to fix vulnerability CVE-2023-2976
+	implementation 'com.google.guava:guava:32.0.1-android'
+
+	// Upgrade Protobuf to fix vulnerabilities CVE-2022-3171, CVE-2022-3509, CVE-2022-3510
+	implementation 'com.google.protobuf:protobuf-java:4.26.0-rc1'
+
+	// Google OAuth Client for Gmail OAuth2 integration
+	implementation 'com.google.oauth-client:google-oauth-client:1.33.3'
+	implementation 'com.google.apis:google-api-client:1.33.3'
+
+	// Add this for Google OAuth
+	implementation 'com.google.auth:google-auth-library-oauth2-http:1.15.0'
+
 	// Testing dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

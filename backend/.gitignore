@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Google API OAuth crdentials
+src/main/resources/gmail-oauth-credentials-*.json

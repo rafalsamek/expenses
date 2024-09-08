@@ -2,18 +2,24 @@ package com.smartvizz.expenses.backend.services;
 
 import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import com.smartvizz.expenses.backend.util.GoogleOAuthUtil;
+import com.google.auth.oauth2.AccessToken;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.UUID;
 
 @Service
@@ -27,6 +33,15 @@ public class UserService {
 
     @Value("${app.baseUrl}")
     private String baseUrl;
+
+    @Value("${gmail.oauth.clientId}")
+    private String clientId;
+
+    @Value("${gmail.oauth.clientSecret}")
+    private String clientSecret;
+
+    @Value("${gmail.oauth.refreshToken}")
+    private String refreshToken;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
@@ -63,15 +78,38 @@ public class UserService {
                 user.getUsername(), baseUrl, user.getActivationCode());
 
         try {
+            // Use the custom OAuth2 MailSender
+            JavaMailSenderImpl mailSender = createMailSenderWithOAuth();
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
             helper.setTo(user.getEmail());
             helper.setSubject(subject);
             helper.setText(message, true);
             mailSender.send(mail);
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             logger.error("Failed to send activation email to user: {}", user.getEmail(), e);
         }
+    }
+
+    private JavaMailSenderImpl createMailSenderWithOAuth() throws IOException {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        // Get access token
+        AccessToken accessToken = GoogleOAuthUtil.getAccessToken();
+
+        // Configure JavaMail properties
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+
+        // Set access token
+        mailSender.setPassword(accessToken.getTokenValue());
+
+        return mailSender;
     }
 
     public boolean activateUser(String code) {
