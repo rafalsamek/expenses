@@ -6,6 +6,8 @@ import com.smartvizz.expenses.backend.services.UserService;
 import com.smartvizz.expenses.backend.util.JwtUtil;
 import com.smartvizz.expenses.backend.web.models.*;
 import io.jsonwebtoken.Claims;
+import jakarta.validation.Valid;
+import com.smartvizz.expenses.backend.services.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,12 @@ public class AuthController {
     private final BlacklistedTokenService blacklistedTokenService;
 
     @Autowired
-    public AuthController(UserService userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, BlacklistedTokenService blacklistedTokenService) {
+    public AuthController(
+            UserService userService,
+            JwtUtil jwtUtil,
+            AuthenticationManager authenticationManager,
+            BlacklistedTokenService blacklistedTokenService
+    ) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
@@ -35,7 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthRegisterResponse> registerUser(@RequestBody AuthRegisterRequest request) {
+    public ResponseEntity<AuthRegisterResponse> registerUser(
+            @Valid @RequestBody AuthRegisterRequest request
+    ) throws BadRequestException {
         UserEntity registeredUser = userService.registerUser(request.username(), request.email(), request.password());
 
         // Create a response DTO from the registered user
@@ -57,7 +66,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthLoginResponse> login(@RequestBody AuthLoginRequest request) {
+    public ResponseEntity<AuthLoginResponse> login(@Valid @RequestBody AuthLoginRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.username(), request.password()));
