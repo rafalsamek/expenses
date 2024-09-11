@@ -53,7 +53,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             // Check if token is blacklisted
             if (blacklistedTokenService.isTokenBlacklisted(jwt)) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                return; // Token is blacklisted, stop the request and return 401
+                return; // Token is blacklisted, stop the request and return 403
             }
 
             // Validate the token
