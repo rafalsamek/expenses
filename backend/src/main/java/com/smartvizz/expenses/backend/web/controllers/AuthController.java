@@ -21,6 +21,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = {"http://localhost:8888", "http://localhost:4200"})
 public class AuthController {
 
     private final UserService userService;
@@ -47,7 +48,6 @@ public class AuthController {
     ) throws BadRequestException {
         UserEntity registeredUser = userService.registerUser(request.username(), request.email(), request.password());
 
-        // Create a response DTO from the registered user
         AuthRegisterResponse response = new AuthRegisterResponse(
                 registeredUser.getId(),
                 registeredUser.getUsername(),
@@ -60,9 +60,25 @@ public class AuthController {
 
     @GetMapping("/activate")
     public ResponseEntity<AuthActivateResponse> activateUser(@RequestParam String code) {
-        boolean activated = userService.activateUser(code);
-        String message = activated ? "Account activated successfully!" : "Invalid activation code!";
-        return ResponseEntity.ok(new AuthActivateResponse(message));
+        // Fetch user by activation code
+        UserEntity user = userService.findByActivationCode(code);
+        if (user != null) {
+            // Activate user if found and not yet activated
+            boolean activated = userService.activateUser(code);
+            if (activated) {
+                // Generate JWT token for the user after activation
+                String jwtToken = jwtUtil.generateToken(user.getUsername());
+                return ResponseEntity.ok(
+                        new AuthActivateResponse(
+                                "Account activated successfully!",
+                                user.getUsername(),
+                                jwtToken
+                        )
+                );
+            }
+        }
+
+        return ResponseEntity.ok(new AuthActivateResponse("Invalid activation code!", null, null));
     }
 
     @PostMapping("/login")
@@ -98,14 +114,15 @@ public class AuthController {
 
             return ResponseEntity.ok("Logout successful! Token invalidated.");
         }
+
         return ResponseEntity.badRequest().body("Invalid token.");
     }
 
-    // Helper function to extract JWT from Authorization header
     private String extractJwtFromRequest(String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         }
+
         return null;
     }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ExpenseEntity } from './expense-entity.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '../../auth.service';
 
 export interface ExpenseResponse {
   totalPages: number;
@@ -40,8 +41,13 @@ export interface ExpenseResponse {
 export class ExpenseService {
   private apiUrl = `${environment.apiUrl}/api/expenses`;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
     console.log(`API URL: ${this.apiUrl}`); // Log the API URL to the console
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
   getExpenses(
@@ -51,34 +57,40 @@ export class ExpenseService {
     sortDirections: string,
     searchBy: string
   ): Observable<ExpenseResponse> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
       .get<ExpenseResponse>(
-        `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
+        `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`,
+        { headers }
       )
       .pipe(catchError(this.handleError));
   }
 
   addExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .post<ExpenseEntity>(this.apiUrl, expense)
+      .post<ExpenseEntity>(this.apiUrl, expense, { headers })
       .pipe(catchError(this.handleError));
   }
 
   updateExpense(expense: ExpenseEntity): Observable<ExpenseEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .put<ExpenseEntity>(`${this.apiUrl}/${expense.id}`, expense)
+      .put<ExpenseEntity>(`${this.apiUrl}/${expense.id}`, expense, { headers })
       .pipe(catchError(this.handleError));
   }
 
   getExpense(id: number): Observable<ExpenseEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .get<ExpenseEntity>(`${this.apiUrl}/${id}`)
+      .get<ExpenseEntity>(`${this.apiUrl}/${id}`, { headers })
       .pipe(catchError(this.handleError));
   }
 
   deleteExpense(expenseId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .delete<void>(`${this.apiUrl}/${expenseId}`)
+      .delete<void>(`${this.apiUrl}/${expenseId}`, { headers })
       .pipe(catchError(this.handleError));
   }
 

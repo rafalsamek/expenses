@@ -3,22 +3,22 @@
     <li routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }">
       <a routerLink="/">Home</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/expenses">Expenses</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/categories">Categories</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/wallets">Wallets</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/reports">Reports</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/imports">Imports</a>
     </li>
-    <li routerLinkActive="selected">
+    <li *ngIf="authService.isAuthenticated()" routerLinkActive="selected">
       <a routerLink="/settings">Settings</a>
     </li>
   </ul>

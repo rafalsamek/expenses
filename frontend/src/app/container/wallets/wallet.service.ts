@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { WalletEntity } from './wallet-entity.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '../../auth.service';
 
 export interface WalletResponse {
   totalPages: number;
@@ -40,8 +41,13 @@ export interface WalletResponse {
 export class WalletService {
   private apiUrl = `${environment.apiUrl}/api/wallets`;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
     console.log(`API URL: ${this.apiUrl}`); // Log the API URL to the console
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
   getWallets(
@@ -51,34 +57,40 @@ export class WalletService {
     sortDirections: string,
     searchBy: string
   ): Observable<WalletResponse> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
       .get<WalletResponse>(
-        `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`
+        `${this.apiUrl}?page=${page}&size=${size}&sortColumns=${sortColumns}&sortDirections=${sortDirections}&searchBy=${searchBy}`,
+        { headers }
       )
       .pipe(catchError(this.handleError));
   }
 
   addWallet(wallet: WalletEntity): Observable<WalletEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .post<WalletEntity>(this.apiUrl, wallet)
+      .post<WalletEntity>(this.apiUrl, wallet, { headers })
       .pipe(catchError(this.handleError));
   }
 
   updateWallet(wallet: WalletEntity): Observable<WalletEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .put<WalletEntity>(`${this.apiUrl}/${wallet.id}`, wallet)
+      .put<WalletEntity>(`${this.apiUrl}/${wallet.id}`, wallet, { headers })
       .pipe(catchError(this.handleError));
   }
 
   getWallet(id: number): Observable<WalletEntity> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .get<WalletEntity>(`${this.apiUrl}/${id}`)
+      .get<WalletEntity>(`${this.apiUrl}/${id}`, { headers })
       .pipe(catchError(this.handleError));
   }
 
   deleteWallet(walletId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
     return this.httpClient
-      .delete<void>(`${this.apiUrl}/${walletId}`)
+      .delete<void>(`${this.apiUrl}/${walletId}`, { headers })
       .pipe(catchError(this.handleError));
   }
 
