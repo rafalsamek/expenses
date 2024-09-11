@@ -118,6 +118,11 @@ public class AuthController {
         return ResponseEntity.badRequest().body("Invalid token.");
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<String> status() {
+        return ResponseEntity.ok("OK");
+    }
+
     private String extractJwtFromRequest(String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
