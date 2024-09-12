@@ -22,6 +22,10 @@ public class CategoryEntity {
     @Column(nullable = true, length = 1000)
     String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    private UserEntity user;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Instant createdAt;
@@ -33,14 +37,13 @@ public class CategoryEntity {
     @ManyToMany(mappedBy = "categories")
     private List<ExpenseEntity> expenses = new ArrayList<>();
 
-    public CategoryEntity(String name, String description) {
+    public CategoryEntity(String name, String description, UserEntity user) {
         this.name = name;
         this.description = description;
+        this.user = user;
     }
 
-    public CategoryEntity() {
-
-    }
+    public CategoryEntity() {}
 
     public long getId() {
         return id;
@@ -64,6 +67,14 @@ public class CategoryEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Instant getCreatedAt() {

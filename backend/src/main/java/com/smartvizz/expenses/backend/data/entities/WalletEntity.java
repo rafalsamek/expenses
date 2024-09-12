@@ -181,11 +181,15 @@ public class WalletEntity {
     private String name;
 
     @Column(nullable = true, length = 1000)
-    String description;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 3, columnDefinition = "VARCHAR(3) DEFAULT 'PLN'")
-    Currency currency;
+    private Currency currency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    private UserEntity user;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
@@ -195,15 +199,14 @@ public class WalletEntity {
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updatedAt;
 
-    public WalletEntity(String name, String description, Currency currency) {
+    public WalletEntity(String name, String description, Currency currency, UserEntity user) {
         this.name = name;
         this.description = description;
         this.currency = currency;
+        this.user = user;
     }
 
-    public WalletEntity() {
-
-    }
+    public WalletEntity() {}
 
     public int getId() {
         return id;
@@ -235,6 +238,14 @@ public class WalletEntity {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Instant getCreatedAt() {

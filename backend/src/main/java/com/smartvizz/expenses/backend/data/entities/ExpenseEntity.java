@@ -196,6 +196,10 @@ public class ExpenseEntity {
     @JoinColumn(name = "wallet_id", nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private WalletEntity wallet;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    private UserEntity user;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Instant createdAt;
@@ -212,12 +216,13 @@ public class ExpenseEntity {
     )
     private List<CategoryEntity> categories = new ArrayList<>();
 
-    public ExpenseEntity(String title, String description, long amount, Currency currency, WalletEntity wallet) {
+    public ExpenseEntity(String title, String description, long amount, Currency currency, WalletEntity wallet, UserEntity user) {
         this.title = title;
         this.description = description;
         this.amount = amount;
         this.currency = currency;
         this.wallet = wallet;
+        this.user = user;
     }
 
     public ExpenseEntity() {
@@ -269,6 +274,14 @@ public class ExpenseEntity {
 
     public void setWallet(WalletEntity wallet) {
         this.wallet = wallet;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Instant getCreatedAt() {
