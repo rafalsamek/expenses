@@ -60,8 +60,8 @@ public class WalletService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch and map entities to DTOs
-        Page<WalletEntity> walletPage = walletRepository.findAll(WalletSpecifications.searchWallet(searchBy), pageable);
+        // Fetch wallets filtered by user and map entities to DTOs
+        Page<WalletEntity> walletPage = walletRepository.findAllByUser(userEntity, pageable);
         List<WalletResponse> walletResponses = walletPage.map(WalletResponse::new).getContent();
 
         // Create and return PageDTO
@@ -79,7 +79,8 @@ public class WalletService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        return walletRepository.findById(id)
+        // Fetch the wallet filtered by user
+        return walletRepository.findByIdAndUser(id, userEntity)
                 .map(WalletResponse::new)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
     }
@@ -103,7 +104,7 @@ public class WalletService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        WalletEntity walletEntity = walletRepository.findById(id)
+        WalletEntity walletEntity = walletRepository.findByIdAndUser(id, userEntity)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
 
         walletEntity.setName(request.name());
@@ -119,9 +120,9 @@ public class WalletService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        if (!walletRepository.existsById(id)) {
-            throw new NotFoundException("Wallet not found with id: " + id);
-        }
-        walletRepository.deleteById(id);
+        WalletEntity walletEntity = walletRepository.findByIdAndUser(id, userEntity)
+                .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
+
+        walletRepository.delete(walletEntity);
     }
 }

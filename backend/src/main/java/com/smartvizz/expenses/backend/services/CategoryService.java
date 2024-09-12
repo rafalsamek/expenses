@@ -4,7 +4,6 @@ import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.CategoryRepository;
 import com.smartvizz.expenses.backend.data.repositories.UserRepository;
-import com.smartvizz.expenses.backend.data.specifications.CategorySpecifications;
 import com.smartvizz.expenses.backend.web.models.CategoryRequest;
 import com.smartvizz.expenses.backend.web.models.CategoryResponse;
 import com.smartvizz.expenses.backend.web.models.PageDTO;
@@ -60,8 +59,8 @@ public class CategoryService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch and map entities to DTOs
-        Page<CategoryEntity> categoryPage = categoryRepository.findAll(CategorySpecifications.searchCategory(searchBy), pageable);
+        // Fetch and map entities to DTOs filtered by user
+        Page<CategoryEntity> categoryPage = categoryRepository.findAllByUser(userEntity, pageable);
         List<CategoryResponse> categoryResponses = categoryPage.map(CategoryResponse::new).getContent();
 
         // Create and return PageDTO
@@ -79,7 +78,8 @@ public class CategoryService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        return categoryRepository.findById(id)
+        // Fetch the category by its ID and the authenticated user
+        return categoryRepository.findByIdAndUser(id, userEntity)
                 .map(CategoryResponse::new)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
     }
@@ -102,12 +102,11 @@ public class CategoryService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        CategoryEntity categoryEntity = categoryRepository.findById(id)
+        CategoryEntity categoryEntity = categoryRepository.findByIdAndUser(id, userEntity)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
 
         categoryEntity.setName(request.name());
         categoryEntity.setDescription(request.description());
-        categoryEntity.setUser(userEntity);
 
         CategoryEntity updatedCategory = categoryRepository.save(categoryEntity);
         return new CategoryResponse(updatedCategory);
@@ -117,9 +116,9 @@ public class CategoryService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        if (!categoryRepository.existsById(id)) {
-            throw new NotFoundException("Category not found with id: " + id);
-        }
-        categoryRepository.deleteById(id);
+        CategoryEntity categoryEntity = categoryRepository.findByIdAndUser(id, userEntity)
+                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
+
+        categoryRepository.delete(categoryEntity);
     }
 }

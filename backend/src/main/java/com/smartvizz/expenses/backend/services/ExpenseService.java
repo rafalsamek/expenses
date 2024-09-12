@@ -73,8 +73,8 @@ public class ExpenseService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch and map entities to DTOs
-        Page<ExpenseEntity> expensePage = expenseRepository.findAll(ExpenseSpecifications.searchExpense(searchBy), pageable);
+        // Fetch and map entities to DTOs, filtering by the authenticated user
+        Page<ExpenseEntity> expensePage = expenseRepository.findAllByUser(userEntity, pageable);
         List<ExpenseResponse> expenseResponses = expensePage.map(ExpenseResponse::new).getContent();
 
         // Create and return PageDTO
@@ -92,7 +92,8 @@ public class ExpenseService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        return expenseRepository.findById(id)
+        // Find the expense by ID and user
+        return expenseRepository.findByIdAndUser(id, userEntity)
                 .map(ExpenseResponse::new)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
     }
@@ -120,7 +121,7 @@ public class ExpenseService {
         UserEntity userEntity = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
 
-        ExpenseEntity expenseEntity = expenseRepository.findById(id)
+        ExpenseEntity expenseEntity = expenseRepository.findByIdAndUser(id, userEntity)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
 
         WalletEntity walletEntity = walletRepository.findById(request.walletId())
