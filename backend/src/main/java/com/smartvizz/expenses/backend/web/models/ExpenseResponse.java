@@ -14,6 +14,7 @@ public record ExpenseResponse(
         ExpenseEntity.Currency currency,
         WalletResponse wallet,
         List<CategoryResponse> categories,
+        UserResponse user,
         Instant createdAt,
         Instant updatedAt
 ) {
@@ -28,6 +29,7 @@ public record ExpenseResponse(
                 entity.getCategories() != null ? entity.getCategories().stream()
                         .map(CategoryResponse::new)
                         .collect(Collectors.toList()) : null,
+                new UserResponse(entity.getUser()),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

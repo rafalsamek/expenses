@@ -1,7 +1,9 @@
 package com.smartvizz.expenses.backend.services;
 
 import com.smartvizz.expenses.backend.data.entities.WalletEntity;
+import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.WalletRepository;
+import com.smartvizz.expenses.backend.data.repositories.UserRepository;
 import com.smartvizz.expenses.backend.data.specifications.WalletSpecifications;
 import com.smartvizz.expenses.backend.web.models.WalletRequest;
 import com.smartvizz.expenses.backend.web.models.WalletResponse;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,10 +24,12 @@ import java.util.List;
 public class WalletService {
 
     private final WalletRepository walletRepository;
+    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(WalletService.class);
 
-    public WalletService(WalletRepository walletRepository) {
+    public WalletService(WalletRepository walletRepository, UserRepository userRepository) {
         this.walletRepository = walletRepository;
+        this.userRepository = userRepository;
     }
 
     public PageDTO<WalletResponse> fetchAll(
@@ -32,8 +37,13 @@ public class WalletService {
             int size,
             String[] sortColumns,
             String[] sortDirections,
-            String searchBy
+            String searchBy,
+            User user
     ) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         // Validate page and size inputs
         page = Math.max(page, 0);
         size = Math.max(size, 1);
@@ -64,36 +74,51 @@ public class WalletService {
         );
     }
 
-    public WalletResponse fetchOne(int id) {
+    public WalletResponse fetchOne(int id, User user) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         return walletRepository.findById(id)
                 .map(WalletResponse::new)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
     }
 
-    public WalletResponse create(WalletRequest request) {
+    public WalletResponse create(WalletRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         WalletEntity walletEntity = new WalletEntity(
                 request.name(),
                 request.description(),
-                request.currency()
+                request.currency(),
+                userEntity
         );
 
         WalletEntity savedWallet = walletRepository.save(walletEntity);
         return new WalletResponse(savedWallet);
     }
 
-    public WalletResponse update(int id, WalletRequest request) {
+    public WalletResponse update(int id, WalletRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         WalletEntity walletEntity = walletRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + id));
 
         walletEntity.setName(request.name());
         walletEntity.setDescription(request.description());
         walletEntity.setCurrency(request.currency());
+        walletEntity.setUser(userEntity); // Update user association
 
         WalletEntity updatedWallet = walletRepository.save(walletEntity);
         return new WalletResponse(updatedWallet);
     }
 
-    public void delete(int id) {
+    public void delete(int id, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         if (!walletRepository.existsById(id)) {
             throw new NotFoundException("Wallet not found with id: " + id);
         }

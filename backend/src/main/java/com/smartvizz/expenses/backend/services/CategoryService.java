@@ -1,7 +1,9 @@
 package com.smartvizz.expenses.backend.services;
 
 import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
+import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.CategoryRepository;
+import com.smartvizz.expenses.backend.data.repositories.UserRepository;
 import com.smartvizz.expenses.backend.data.specifications.CategorySpecifications;
 import com.smartvizz.expenses.backend.web.models.CategoryRequest;
 import com.smartvizz.expenses.backend.web.models.CategoryResponse;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,10 +24,12 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository) {
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     public PageDTO<CategoryResponse> fetchAll(
@@ -32,8 +37,13 @@ public class CategoryService {
             int size,
             String[] sortColumns,
             String[] sortDirections,
-            String searchBy
+            String searchBy,
+            User user
     ) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         // Validate page and size inputs
         page = Math.max(page, 0);
         size = Math.max(size, 1);
@@ -64,34 +74,49 @@ public class CategoryService {
         );
     }
 
-    public CategoryResponse fetchOne(long id) {
+    public CategoryResponse fetchOne(long id, User user) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         return categoryRepository.findById(id)
                 .map(CategoryResponse::new)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
     }
 
-    public CategoryResponse create(CategoryRequest request) {
+    public CategoryResponse create(CategoryRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         CategoryEntity categoryEntity = new CategoryEntity(
                 request.name(),
-                request.description()
+                request.description(),
+                userEntity
         );
 
         CategoryEntity savedCategory = categoryRepository.save(categoryEntity);
         return new CategoryResponse(savedCategory);
     }
 
-    public CategoryResponse update(long id, CategoryRequest request) {
+    public CategoryResponse update(long id, CategoryRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
 
         categoryEntity.setName(request.name());
         categoryEntity.setDescription(request.description());
+        categoryEntity.setUser(userEntity);
 
         CategoryEntity updatedCategory = categoryRepository.save(categoryEntity);
         return new CategoryResponse(updatedCategory);
     }
 
-    public void delete(long id) {
+    public void delete(long id, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         if (!categoryRepository.existsById(id)) {
             throw new NotFoundException("Category not found with id: " + id);
         }

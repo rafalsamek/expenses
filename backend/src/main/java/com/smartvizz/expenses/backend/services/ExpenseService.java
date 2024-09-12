@@ -2,9 +2,11 @@ package com.smartvizz.expenses.backend.services;
 
 import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
+import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.entities.WalletEntity;
 import com.smartvizz.expenses.backend.data.repositories.ExpenseRepository;
 import com.smartvizz.expenses.backend.data.repositories.CategoryRepository;
+import com.smartvizz.expenses.backend.data.repositories.UserRepository;
 import com.smartvizz.expenses.backend.data.repositories.WalletRepository;
 import com.smartvizz.expenses.backend.data.specifications.ExpenseSpecifications;
 import com.smartvizz.expenses.backend.web.models.ExpenseRequest;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,16 +30,19 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final WalletRepository walletRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(ExpenseService.class);
 
     public ExpenseService(
             ExpenseRepository expenseRepository,
             WalletRepository walletRepository,
-            CategoryRepository categoryRepository
+            CategoryRepository categoryRepository,
+            UserRepository userRepository
     ) {
         this.expenseRepository = expenseRepository;
         this.walletRepository = walletRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     public PageDTO<ExpenseResponse> fetchAll(
@@ -44,8 +50,13 @@ public class ExpenseService {
             int size,
             String[] sortColumns,
             String[] sortDirections,
-            String searchBy
+            String searchBy,
+            User user
     ) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         // Validate page and size inputs
         page = Math.max(page, 0);
         size = Math.max(size, 1);
@@ -76,13 +87,20 @@ public class ExpenseService {
         );
     }
 
-    public ExpenseResponse fetchOne(long id) {
+    public ExpenseResponse fetchOne(long id, User user) {
+        // Fetch UserEntity based on the authenticated user
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         return expenseRepository.findById(id)
                 .map(ExpenseResponse::new)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
     }
 
-    public ExpenseResponse create(ExpenseRequest request) {
+    public ExpenseResponse create(ExpenseRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         WalletEntity walletEntity = walletRepository.findById(request.walletId())
                 .orElseThrow(() -> new NotFoundException("Wallet not found with id: " + request.walletId()));
 
@@ -91,13 +109,17 @@ public class ExpenseService {
                 request.description(),
                 request.amount(),
                 request.currency(),
-                walletEntity
+                walletEntity,
+                userEntity
         );
 
         return getExpenseResponse(request, expenseEntity);
     }
 
-    public ExpenseResponse update(long id, ExpenseRequest request) {
+    public ExpenseResponse update(long id, ExpenseRequest request, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         ExpenseEntity expenseEntity = expenseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Expense not found with id: " + id));
 
@@ -109,6 +131,7 @@ public class ExpenseService {
         expenseEntity.setAmount(request.amount());
         expenseEntity.setCurrency(request.currency());
         expenseEntity.setWallet(walletEntity);
+        expenseEntity.setUser(userEntity);
 
         return getExpenseResponse(request, expenseEntity);
     }
@@ -127,7 +150,10 @@ public class ExpenseService {
         return new ExpenseResponse(updatedExpense);
     }
 
-    public void delete(long id) {
+    public void delete(long id, User user) {
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with username: " + user.getUsername()));
+
         if (!expenseRepository.existsById(id)) {
             throw new NotFoundException("Expense not found with id: " + id);
         }

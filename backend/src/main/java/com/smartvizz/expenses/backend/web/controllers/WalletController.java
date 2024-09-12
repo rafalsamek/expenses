@@ -7,6 +7,8 @@ import com.smartvizz.expenses.backend.web.models.PageDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,33 +28,41 @@ public class WalletController {
             @RequestParam(defaultValue = "25") int size,
             @RequestParam(defaultValue = "createdAt,title") String[] sortColumns,
             @RequestParam(defaultValue = "asc,asc") String[] sortDirections,
-            @RequestParam(defaultValue = "") String searchBy
+            @RequestParam(defaultValue = "") String searchBy,
+            @AuthenticationPrincipal User user
     ) {
-        PageDTO<WalletResponse> wallets = walletService.fetchAll(page, size, sortColumns, sortDirections, searchBy);
+        PageDTO<WalletResponse> wallets = walletService.fetchAll(page, size, sortColumns, sortDirections, searchBy, user);
         return ResponseEntity.ok(wallets);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<WalletResponse> get(@PathVariable int id) {
-        WalletResponse wallet = walletService.fetchOne(id);
+    public ResponseEntity<WalletResponse> get(@PathVariable int id, @AuthenticationPrincipal User user) {
+        WalletResponse wallet = walletService.fetchOne(id, user);
         return ResponseEntity.ok(wallet);
     }
 
     @PostMapping
-    public ResponseEntity<WalletResponse> create(@Valid @RequestBody WalletRequest request) {
-        WalletResponse createdWallet = walletService.create(request);
+    public ResponseEntity<WalletResponse> create(
+            @Valid @RequestBody WalletRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+        WalletResponse createdWallet = walletService.create(request, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWallet);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<WalletResponse> update(@PathVariable int id, @Valid @RequestBody WalletRequest request) {
-        WalletResponse updatedWallet = walletService.update(id, request);
+    public ResponseEntity<WalletResponse> update(
+            @PathVariable int id,
+            @Valid @RequestBody WalletRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+        WalletResponse updatedWallet = walletService.update(id, request, user);
         return ResponseEntity.ok(updatedWallet);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
-        walletService.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable int id, @AuthenticationPrincipal User user) {
+        walletService.delete(id, user);
         return ResponseEntity.noContent().build();
     }
 }
