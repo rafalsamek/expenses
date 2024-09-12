@@ -1,5 +1,6 @@
 package com.smartvizz.expenses.backend.data.specifications;
 
+import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.entities.WalletEntity;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,5 +42,9 @@ public class WalletSpecifications {
 
             return builder.or(predicateList.toArray(new Predicate[]{}));
         };
+    }
+
+    public static Specification<WalletEntity> byUser(UserEntity userEntity) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("user"), userEntity);
     }
 }

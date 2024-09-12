@@ -2,6 +2,7 @@ package com.smartvizz.expenses.backend.data.specifications;
 
 import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.ExpenseEntity;
+import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -61,6 +62,10 @@ public class ExpenseSpecifications {
             );
             return builder.or(predicateList.toArray(new Predicate[0]));
         };
+    }
+
+    public static Specification<ExpenseEntity> byUser(UserEntity userEntity) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("user"), userEntity);
     }
 
     private static boolean isConvertibleToFloat(String searchBy) {

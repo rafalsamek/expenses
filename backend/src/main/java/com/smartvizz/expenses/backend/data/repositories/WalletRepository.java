@@ -10,10 +10,5 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface WalletRepository extends JpaRepository<WalletEntity, Integer>, JpaSpecificationExecutor<WalletEntity> {
-
-    // Fetch all wallets for a specific user with pagination
-    Page<WalletEntity> findAllByUser(UserEntity user, Pageable pageable);
-
-    // Fetch a specific wallet by its ID and user
     Optional<WalletEntity> findByIdAndUser(Integer id, UserEntity user);
 }

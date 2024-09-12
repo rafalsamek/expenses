@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -75,8 +76,12 @@ public class ExpenseService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch and map entities to DTOs, filtering by the authenticated user
-        Page<ExpenseEntity> expensePage = expenseRepository.findAllByUser(userEntity, pageable);
+        // Combine user filtering and search specification
+        Specification<ExpenseEntity> spec = Specification.where(ExpenseSpecifications.searchExpense(searchBy))
+                .and(ExpenseSpecifications.byUser(userEntity));
+
+        // Fetch and map entities to DTOs
+        Page<ExpenseEntity> expensePage = expenseRepository.findAll(spec, pageable);
         List<ExpenseResponse> expenseResponses = expensePage.map(ExpenseResponse::new).getContent();
 
         // Create and return PageDTO

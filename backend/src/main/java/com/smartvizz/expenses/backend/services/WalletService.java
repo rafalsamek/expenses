@@ -1,9 +1,11 @@
 package com.smartvizz.expenses.backend.services;
 
+import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.WalletEntity;
 import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.WalletRepository;
 import com.smartvizz.expenses.backend.data.repositories.UserRepository;
+import com.smartvizz.expenses.backend.data.specifications.CategorySpecifications;
 import com.smartvizz.expenses.backend.data.specifications.WalletSpecifications;
 import com.smartvizz.expenses.backend.web.models.WalletRequest;
 import com.smartvizz.expenses.backend.web.models.WalletResponse;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +65,12 @@ public class WalletService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch wallets filtered by user and map entities to DTOs
-        Page<WalletEntity> walletPage = walletRepository.findAllByUser(userEntity, pageable);
+        // Combine user filtering and search specification
+        Specification<WalletEntity> spec = Specification.where(WalletSpecifications.searchWallet(searchBy))
+                .and(WalletSpecifications.byUser(userEntity));
+
+        // Fetch and map entities to DTOs
+        Page<WalletEntity> walletPage = walletRepository.findAll(spec, pageable);
         List<WalletResponse> walletResponses = walletPage.map(WalletResponse::new).getContent();
 
         // Create and return PageDTO

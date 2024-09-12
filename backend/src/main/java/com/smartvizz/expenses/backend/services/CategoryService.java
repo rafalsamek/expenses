@@ -4,6 +4,7 @@ import com.smartvizz.expenses.backend.data.entities.CategoryEntity;
 import com.smartvizz.expenses.backend.data.entities.UserEntity;
 import com.smartvizz.expenses.backend.data.repositories.CategoryRepository;
 import com.smartvizz.expenses.backend.data.repositories.UserRepository;
+import com.smartvizz.expenses.backend.data.specifications.CategorySpecifications;
 import com.smartvizz.expenses.backend.web.models.CategoryRequest;
 import com.smartvizz.expenses.backend.web.models.CategoryResponse;
 import com.smartvizz.expenses.backend.web.models.PageDTO;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -61,8 +63,12 @@ public class CategoryService {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        // Fetch and map entities to DTOs filtered by user
-        Page<CategoryEntity> categoryPage = categoryRepository.findAllByUser(userEntity, pageable);
+        // Combine user filtering and search specification
+        Specification<CategoryEntity> spec = Specification.where(CategorySpecifications.searchCategory(searchBy))
+                .and(CategorySpecifications.byUser(userEntity));
+
+        // Fetch and map entities to DTOs
+        Page<CategoryEntity> categoryPage = categoryRepository.findAll(spec, pageable);
         List<CategoryResponse> categoryResponses = categoryPage.map(CategoryResponse::new).getContent();
 
         // Create and return PageDTO
