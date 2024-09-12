@@ -65,8 +65,10 @@ public class ExpenseService {
         List<Sort.Order> sortOrders = new ArrayList<>();
         for (int i = 0; i < sortColumns.length; i++) {
             String sortColumn = sortColumns[i];
-            Sort.Direction sortDirection = (sortDirections.length > i && sortDirections[i].equalsIgnoreCase("desc"))
-                    ? Sort.Direction.DESC : Sort.Direction.ASC;
+            Sort.Direction sortDirection =
+                    (sortDirections.length > i && sortDirections[i].equalsIgnoreCase("desc"))
+                    ? Sort.Direction.DESC
+                    : Sort.Direction.ASC;
             sortOrders.add(new Sort.Order(sortDirection, sortColumn));
         }
 
