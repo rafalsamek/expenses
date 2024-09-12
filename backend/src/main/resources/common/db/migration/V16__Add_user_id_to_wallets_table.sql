@@ -1,0 +1,5 @@
+USE expenses;
+
+ALTER TABLE wallets
+ADD COLUMN user_id BIGINT UNSIGNED NOT NULL DEFAULT 1 AFTER currency,
+ADD CONSTRAINT fk_user_wallet FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
