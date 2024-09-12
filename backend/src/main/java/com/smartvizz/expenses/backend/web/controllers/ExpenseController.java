@@ -31,13 +31,22 @@ public class ExpenseController {
             @RequestParam(defaultValue = "") String searchBy,
             @AuthenticationPrincipal User user
     ) {
-        PageDTO<ExpenseResponse> expenses = expenseService.fetchAll(page, size, sortColumns, sortDirections, searchBy, user);
+        PageDTO<ExpenseResponse> expenses = expenseService.fetchAll(
+                page,
+                size,
+                sortColumns,
+                sortDirections,
+                searchBy,
+                user
+        );
+
         return ResponseEntity.ok(expenses);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ExpenseResponse> get(@PathVariable long id, @AuthenticationPrincipal User user) {
         ExpenseResponse expense = expenseService.fetchOne(id, user);
+
         return ResponseEntity.ok(expense);
     }
 
@@ -47,6 +56,7 @@ public class ExpenseController {
             @AuthenticationPrincipal User user
     ) {
         ExpenseResponse createdExpense = expenseService.create(request, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExpense);
     }
 
@@ -57,12 +67,14 @@ public class ExpenseController {
             @AuthenticationPrincipal User user
     ) {
         ExpenseResponse updatedExpense = expenseService.update(id, request, user);
+
         return ResponseEntity.ok(updatedExpense);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable long id, @AuthenticationPrincipal User user) {
         expenseService.delete(id, user);
+
         return ResponseEntity.noContent().build();
     }
 }

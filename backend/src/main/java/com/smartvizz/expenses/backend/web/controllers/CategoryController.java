@@ -31,13 +31,22 @@ public class CategoryController {
             @RequestParam(defaultValue = "") String searchBy,
             @AuthenticationPrincipal User user
     ) {
-        PageDTO<CategoryResponse> categories = categoryService.fetchAll(page, size, sortColumns, sortDirections, searchBy, user);
+        PageDTO<CategoryResponse> categories = categoryService.fetchAll(
+                page,
+                size,
+                sortColumns,
+                sortDirections,
+                searchBy,
+                user
+        );
+
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<CategoryResponse> get(@PathVariable long id, @AuthenticationPrincipal User user) {
         CategoryResponse category = categoryService.fetchOne(id, user);
+
         return ResponseEntity.ok(category);
     }
 
@@ -47,6 +56,7 @@ public class CategoryController {
             @AuthenticationPrincipal User user
     ) {
         CategoryResponse createdCategory = categoryService.create(request, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
     }
 
@@ -57,12 +67,14 @@ public class CategoryController {
             @AuthenticationPrincipal User user
     ) {
         CategoryResponse updatedCategory = categoryService.update(id, request, user);
+
         return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable long id, @AuthenticationPrincipal User user) {
         categoryService.delete(id, user);
+
         return ResponseEntity.noContent().build();
     }
 }

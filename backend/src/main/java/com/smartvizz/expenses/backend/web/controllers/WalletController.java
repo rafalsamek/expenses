@@ -31,13 +31,22 @@ public class WalletController {
             @RequestParam(defaultValue = "") String searchBy,
             @AuthenticationPrincipal User user
     ) {
-        PageDTO<WalletResponse> wallets = walletService.fetchAll(page, size, sortColumns, sortDirections, searchBy, user);
+        PageDTO<WalletResponse> wallets = walletService.fetchAll(
+                page,
+                size,
+                sortColumns,
+                sortDirections,
+                searchBy,
+                user
+        );
+
         return ResponseEntity.ok(wallets);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<WalletResponse> get(@PathVariable int id, @AuthenticationPrincipal User user) {
         WalletResponse wallet = walletService.fetchOne(id, user);
+
         return ResponseEntity.ok(wallet);
     }
 
@@ -47,6 +56,7 @@ public class WalletController {
             @AuthenticationPrincipal User user
     ) {
         WalletResponse createdWallet = walletService.create(request, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWallet);
     }
 
@@ -57,12 +67,14 @@ public class WalletController {
             @AuthenticationPrincipal User user
     ) {
         WalletResponse updatedWallet = walletService.update(id, request, user);
+
         return ResponseEntity.ok(updatedWallet);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable int id, @AuthenticationPrincipal User user) {
         walletService.delete(id, user);
+
         return ResponseEntity.noContent().build();
     }
 }
