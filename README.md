@@ -118,7 +118,7 @@ This project requires the following environment:
 The following are the staging links for the services:
 
 - **Staging Frontend**: [http://162.55.215.13:8888](http://162.55.215.13:8888)
-- **Staging Backend (API)**: [http://162.55.215.13:8880/api](http://162.55.215.13:8880)
+- **Staging Backend (API)**: [http://162.55.215.13:8880/api](http://162.55.215.13:8880/api)
 - **Staging phpMyAdmin**: [http://162.55.215.13:8081](http://162.55.215.13:8081)
 - **Staging Mailhog**: [http://162.55.215.13:8025](http://162.55.215.13:8025)
 
