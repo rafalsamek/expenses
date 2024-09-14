@@ -21,8 +21,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:8888", "http://localhost:4200"})
-public class AuthController {
+@CrossOrigin(origins = {"http://localhost:8888", "http://localhost:4200", "http://162.55.215.13:8888", "http://162.55.215.13:4200"})public class AuthController {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
