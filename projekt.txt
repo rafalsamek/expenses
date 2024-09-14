@@ -1,0 +1,11 @@
+https://github.com/rafalsamek/expenses
+
+- Staging Frontend: http://162.55.215.13:8888
+- Staging Backend (API): http://162.55.215.13:8880/api
+- Staging phpMyAdmin: http://162.55.215.13:8081
+- Staging Mailhog: http://162.55.215.13:8025
+
+- Production Frontend: https://expenses.smartvizz.com
+- Production Backend (API): https://expenses.smartvizz.com/api
+- Production phpMyAdmin: https://expenses.smartvizz/phpmyadmin
+- Production Mailhog: https://expenses.smartvizz/mailhog
