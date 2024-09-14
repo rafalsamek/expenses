@@ -7,7 +7,8 @@ Follow the steps below to install and configure Docker, Docker Compose, and Git,
 
 ### Prerequisites
 
-Make sure you have the following installed on your system:
+This project requires the following environment:
+- **Operating System**: Ubuntu 20.04 LTS
 - **Docker**
 - **Docker Compose**
 - **Git**
