@@ -1,5 +1,10 @@
 https://github.com/rafalsamek/expenses
 
+- Development Frontend: http://localhost:8888
+- Development Backend (API): http://localhost:8880/api
+- Development phpMyAdmin: http://localhost:8081
+- Development Mailhog: http://localhost:8025
+
 - Staging Frontend: http://162.55.215.13:8888
 - Staging Backend (API): http://162.55.215.13:8880/api
 - Staging phpMyAdmin: http://162.55.215.13:8081
@@ -8,4 +13,7 @@ https://github.com/rafalsamek/expenses
 - Production Frontend: https://expenses.smartvizz.com
 - Production Backend (API): https://expenses.smartvizz.com/api
 - Production phpMyAdmin: https://expenses.smartvizz/phpmyadmin
-- Production Mailhog: https://expenses.smartvizz/mailhog
+
+Demo user (each environment: development, staging and production):
+username: demo
+password: pass123

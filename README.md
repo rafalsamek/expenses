@@ -102,7 +102,7 @@ This project requires the following environment:
 
 2. Once the services are up, you can access the following services:
 
-### Local Service URLs
+### Local Service URLs (development)
 
 - **Frontend**: [http://localhost:8888](http://localhost:8888)
 - **Backend (API)**: [http://localhost:8880/api](http://localhost:8880/api)
@@ -121,6 +121,21 @@ The following are the staging links for the services:
 - **Staging Backend (API)**: [http://162.55.215.13:8880/api](http://162.55.215.13:8880/api)
 - **Staging phpMyAdmin**: [http://162.55.215.13:8081](http://162.55.215.13:8081)
 - **Staging Mailhog**: [http://162.55.215.13:8025](http://162.55.215.13:8025)
+
+### Production Links
+
+The following are the production links for the services:
+
+- **Production Frontend**: [https://expenses.smartvizz.com](https://expenses.smartvizz.com)
+- **Production Backend (API)**: [https://expenses.smartvizz.com/api](https://expenses.smartvizz.com/api)
+- **Production phpMyAdmin**: [https://expenses.smartvizz.com/phpmyadmin](https://expenses.smartvizz.com/phpmyadmin)
+
+### Demo User (each environment: Development, Staging and Production)
+
+For each environment development, staging and production environments, you can use the following demo credentials to log in:
+
+- **Username**: `demo`
+- **Password**: `pass123`
 
 ### Backend API Documentation
 
