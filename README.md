@@ -102,7 +102,7 @@ This project requires the following environment:
 
 2. Once the services are up, you can access the following services:
 
-### Local Service URLs (development)
+### Local Links (development)
 
 - **Frontend**: [http://localhost:8888](http://localhost:8888)
 - **Backend (API)**: [http://localhost:8880/api](http://localhost:8880/api)
