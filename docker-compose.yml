@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    container_name: expenses_backend
+    container_name: expenses_prod_backend
     build:
       context: ./backend
       dockerfile: ../.docker/backend/Dockerfile
@@ -23,7 +23,7 @@ services:
       - network
 
   frontend:
-    container_name: expenses_frontend
+    container_name: expenses_prod_frontend
     build:
       context: ./frontend
       dockerfile: ../.docker/frontend/Dockerfile
@@ -40,7 +40,7 @@ services:
       - network
 
   mysql:
-    container_name: expenses_mysql
+    container_name: expenses_prod_mysql
     build:
       context: .
       dockerfile: ./.docker/mysql/Dockerfile
@@ -51,14 +51,14 @@ services:
     env_file:
       - .env
     volumes:
-      - expenses_db_data:/var/lib/mysql
+      - expenses_prod_db_data:/var/lib/mysql
       - ./.docker/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./.docker/mysql/dump:/docker-entrypoint-initdb.d
     networks:
       - network
 
   phpmyadmin:
-    container_name: expenses_phpmyadmin
+    container_name: expenses_prod_phpmyadmin
     build:
       context: .
       dockerfile: ./.docker/phpmyadmin/Dockerfile
@@ -76,7 +76,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog
-    container_name: expenses_mailhog
+    container_name: expenses_prod_mailhog
     ports:
       - "8025:8025"  # Web interface
       - "1025:1025"  # SMTP port
@@ -84,7 +84,7 @@ services:
       - network
 
 #  nginx:
-#    container_name: expenses_nginx
+#    container_name: expenses_prod_nginx
 #    build:
 #      context: .
 #      dockerfile: ./.docker/nginx/Dockerfile
@@ -102,7 +102,7 @@ services:
 #      - network
 
 #  certbot:
-#    container_name: expenses_certbot
+#    container_name: expenses_prod_certbot
 #    build:
 #      context: .
 #      dockerfile: ./.docker/certbot/Dockerfile
@@ -120,5 +120,5 @@ networks:
 
 volumes:
   node_modules:
-  expenses_db_data:
-    name: expenses_db_data
+  expenses_prod_db_data:
+    name: expenses_prod_db_data
