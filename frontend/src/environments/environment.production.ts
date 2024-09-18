@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://expenses.smartvizz.com',
+  apiUrl: 'http://162.55.215.13:8890',
 };
