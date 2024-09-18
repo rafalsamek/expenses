@@ -20,7 +20,7 @@ services:
     volumes:
       - ./backend/src:/app/src  # Mount only the source directory
     networks:
-      - network
+      - expenses_dev_network
 
   frontend:
     container_name: expenses_frontend
@@ -35,9 +35,9 @@ services:
     volumes:
       - ./frontend:/app
       - ./.env:/app/.env
-      - node_modules:/app/node_modules
+      - expenses_dev_node_modules:/app/node_modules
     networks:
-      - network
+      - expenses_dev_network
 
   mysql:
     container_name: expenses_mysql
@@ -51,11 +51,11 @@ services:
     env_file:
       - .env
     volumes:
-      - expenses_db_data:/var/lib/mysql
+      - expenses_dev_db_data:/var/lib/mysql
       - ./.docker/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./.docker/mysql/dump:/docker-entrypoint-initdb.d
     networks:
-      - network
+      - expenses_dev_network
 
   phpmyadmin:
     container_name: expenses_phpmyadmin
@@ -72,7 +72,7 @@ services:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
-      - network
+      - expenses_dev_network
 
   mailhog:
     image: mailhog/mailhog
@@ -81,7 +81,7 @@ services:
       - "8025:8025"  # Web interface
       - "1025:1025"  # SMTP port
     networks:
-      - network
+      - expenses_dev_network
 
 #  nginx:
 #    container_name: expenses_nginx
@@ -99,7 +99,7 @@ services:
 #      - backend
 #      - frontend
 #    networks:
-#      - network
+#      - expenses_dev_network
 
 #  certbot:
 #    container_name: expenses_certbot
@@ -113,12 +113,12 @@ services:
 #    depends_on:
 #      - nginx
 #    networks:
-#      - network
+#      - expenses_dev_network
 
 networks:
-  network:
+  expenses_dev_network:
 
 volumes:
-  node_modules:
-  expenses_db_data:
-    name: expenses_db_data
+  expenses_dev_node_modules:
+  expenses_dev_db_data:
+    name: expenses_dev_db_data
