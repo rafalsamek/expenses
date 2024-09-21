@@ -18,7 +18,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: ${ENV}
     volumes:
-      - ./backend/src:/app/src  # Mount only the source directory
+      - ./backend/src:/app/src
     networks:
       - expenses_prod_network
 
@@ -46,7 +46,7 @@ services:
     build:
       context: .
       dockerfile: ./.docker/mysql/Dockerfile
-#    restart: always
+    restart: always
     ports:
       - "3316:3306"
     hostname: mysql
@@ -76,12 +76,24 @@ services:
     networks:
       - expenses_prod_network
 
-  mailhog:
-    image: mailhog/mailhog
-    container_name: expenses_prod_mailhog
+  postfix:
+    build:
+      context: .
+      dockerfile: ./.docker/postfix/Dockerfile
+    container_name: expenses_prod_postfix
+    restart: always
     ports:
-      - "8035:8025"  # Web interface
-      - "1035:1025"  # SMTP port
+      - "${MAIL_PORT}:${MAIL_PORT}"
+    env_file:
+      - .env
+    environment:
+      DOMAIN: ${MAIL_HOST}
+      SMTP_USER: ${MAIL_USERNAME}:${MAIL_PASSWORD}
+    volumes:
+      - expenses_prod_postfix_data:/var/spool/postfix
+      - expenses_prod_postfix_config:/etc/postfix
+      - ./.docker/postfix/main.cf:/etc/postfix/main.cf
+      - ./.docker/postfix/master.cf:/etc/postfix/master.cf
     networks:
       - expenses_prod_network
 
@@ -125,3 +137,5 @@ volumes:
   expenses_prod_node_modules:
   expenses_prod_db_data:
     name: expenses_prod_db_data
+  expenses_prod_postfix_data:
+  expenses_prod_postfix_config:
