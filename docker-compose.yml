@@ -83,37 +83,37 @@ services:
     networks:
       - expenses_prod_network
 
-#  nginx:
-#    container_name: expenses_prod_nginx
-#    build:
-#      context: .
-#      dockerfile: ./.docker/nginx/Dockerfile
-#    volumes:
-#      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
-#      - ./.docker/certbot/conf:/etc/letsencrypt
-#      - ./.docker/certbot/www:/var/www/certbot
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    depends_on:
-#      - backend
-#      - frontend
-#    networks:
-#      - expenses_prod_network
-#
-#  certbot:
-#    container_name: expenses_prod_certbot
-#    build:
-#      context: .
-#      dockerfile: ./.docker/certbot/Dockerfile
-#    volumes:
-#      - ./.docker/certbot/conf:/etc/letsencrypt
-#      - ./.docker/certbot/www:/var/www/certbot
-#    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-#    depends_on:
-#      - nginx
-#    networks:
-#      - expenses_prod_network
+  nginx:
+    container_name: expenses_prod_nginx
+    build:
+      context: .
+      dockerfile: ./.docker/nginx/Dockerfile
+    volumes:
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./.docker/certbot/conf:/etc/letsencrypt
+      - ./.docker/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - expenses_prod_network
+
+  certbot:
+    container_name: expenses_prod_certbot
+    build:
+      context: .
+      dockerfile: ./.docker/certbot/Dockerfile
+    volumes:
+      - ./.docker/certbot/conf:/etc/letsencrypt
+      - ./.docker/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - nginx
+    networks:
+      - expenses_prod_network
 
 networks:
   expenses_prod_network:
