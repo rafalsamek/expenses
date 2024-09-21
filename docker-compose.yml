@@ -91,7 +91,7 @@ services:
       SMTP_USER: ${MAIL_USERNAME}:${MAIL_PASSWORD}
     volumes:
       - expenses_prod_postfix_data:/var/spool/postfix
-      - expenses_prod_postfix_config:/etc/postfix
+#      - expenses_prod_postfix_config:/etc/postfix
     networks:
       - expenses_prod_network
 
@@ -136,4 +136,4 @@ volumes:
   expenses_prod_db_data:
     name: expenses_prod_db_data
   expenses_prod_postfix_data:
-  expenses_prod_postfix_config:
+#  expenses_prod_postfix_config:
