@@ -29,6 +29,8 @@ services:
       dockerfile: ../.docker/frontend/Dockerfile
     ports:
       - "8898:4200"
+    environment:
+      - HOST=expenses.smartvizz.com
     command: npm start
     depends_on:
       - backend
