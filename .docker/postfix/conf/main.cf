@@ -1,9 +1,8 @@
-# Basic Postfix configuration
 myhostname = mail.expenses.smartvizz.com
 mydomain = expenses.smartvizz.com
 myorigin = $mydomain
-inet_interfaces = all  # Listen on all network interfaces
-inet_protocols = ipv4  # Use only IPv4
+inet_interfaces = all
+inet_protocols = ipv4
 mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
 relay_domains = *
 home_mailbox = Maildir/
