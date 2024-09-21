@@ -92,8 +92,6 @@ services:
     volumes:
       - expenses_prod_postfix_data:/var/spool/postfix
       - expenses_prod_postfix_config:/etc/postfix
-      - ./.docker/postfix/main.cf:/etc/postfix/main.cf
-      - ./.docker/postfix/master.cf:/etc/postfix/master.cf
     networks:
       - expenses_prod_network
 
