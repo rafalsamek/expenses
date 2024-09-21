@@ -22,10 +22,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = {
-        "http://localhost:8888",
-        "http://localhost:4200",
-        "http://162.55.215.13:8898",
-        "http://162.55.215.13:4200"
+        "https://expenses.smartvizz.com"
 })
 public class AuthController {
 
