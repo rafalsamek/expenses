@@ -1,5 +1,5 @@
 # Basic settings
-myhostname = mail.expenses.smartvizz.com
+myhostname = expenses.smartvizz.com
 mydomain = expenses.smartvizz.com
 myorigin = $mydomain
 
