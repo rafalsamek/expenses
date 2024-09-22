@@ -64,6 +64,8 @@ services:
     build:
       context: .
       dockerfile: ./.docker/phpmyadmin/Dockerfile
+      args:
+        PMA_ABSOLUTE_URI: "https://expenses.smartvizz.com/phpmyadmin/"
     depends_on:
       - mysql
     ports:
