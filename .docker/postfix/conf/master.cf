@@ -2,6 +2,10 @@
 smtp      inet  n       -       n       -       -       smtpd
   -o inet_interfaces=none
 
+# Disable submission service on port 587
+submission inet n       -       n       -       -       smtpd
+  -o inet_interfaces=none
+
 # Custom SMTP service on port 597 (your chosen port)
 597      inet  n       -       n       -       -       smtpd
   -o syslog_name=postfix/597
