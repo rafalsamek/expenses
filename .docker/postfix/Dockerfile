@@ -10,8 +10,11 @@ RUN ls -l /etc/postfix/
 # Ensure permissions are correct for configuration files
 RUN chmod 644 /etc/postfix/main.cf /etc/postfix/master.cf
 
-# Remove rsyslog configuration to prevent it from starting
-RUN rm -f /etc/supervisor/conf.d/rsyslog.conf
+# Ensure ownership of Postfix directories and files
+RUN chown -R root:root /var/spool/postfix
 
-# Set custom permissions for Postfix directories to avoid permission issues
-RUN chown -R postfix:root /var/spool/postfix/
+# Set proper ownership for critical directories to Postfix user
+RUN chown -R postfix:postdrop /var/spool/postfix/maildrop /var/spool/postfix/public /var/spool/postfix/private
+
+# Start Postfix with Rsyslog support
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

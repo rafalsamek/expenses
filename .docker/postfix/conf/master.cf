@@ -1,6 +1,6 @@
 # Disable the default SMTP service on port 25
 smtp      inet  n       -       n       -       -       smtpd
-  -o inet_interfaces=none  # Disable the default SMTP service on port 25
+  -o inet_interfaces=none
 
 # Configure submission service on port 587
 submission inet n       -       n       -       -       smtpd
