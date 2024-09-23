@@ -2,7 +2,7 @@
 FROM certbot/certbot
 
 # Copy the existing initialization script into the container
-COPY ./docker/certbot/init-certbot.sh /usr/local/bin/init-certbot.sh
+COPY ./.docker/certbot/init-certbot.sh /usr/local/bin/init-certbot.sh
 
 # Make the script executable
 RUN chmod +x /usr/local/bin/init-certbot.sh
