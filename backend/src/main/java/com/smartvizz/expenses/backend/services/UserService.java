@@ -34,7 +34,7 @@ public class UserService {
     @Value("${app.frontendUrl}")
     private String frontendUrl;
 
-    @Value(">${spring.mail.properties.from}")
+    @Value("${spring.mail.properties.from}")
     private String mailFrom;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender, JwtUtil jwtUtil) {
