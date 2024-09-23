@@ -33,7 +33,7 @@ spring:
             enable: ${MAIL_SMTP_STARTTLS_ENABLE}  # SMTP STARTTLS enable from environment
           ssl:
             enable: ${MAIL_SMTP_SSL_ENABLE}
-
+      from: ${MAIL_FROM}
 jwt:
   secret: ${JWT_SECRET}  # JWT secret key from environment
   expiration: ${JWT_EXPIRATION:3600000}  # JWT expiration time in milliseconds from environment, defaulting to 1 hour
