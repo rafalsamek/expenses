@@ -9,4 +9,4 @@
 
 # Do not ignore .env.dist
 !.env.dist
-!.env.dev.dist
+!.env.*.dist
