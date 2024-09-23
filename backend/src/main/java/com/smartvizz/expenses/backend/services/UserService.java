@@ -34,8 +34,8 @@ public class UserService {
     @Value("${app.frontendUrl}")
     private String frontendUrl;
 
-    @Value("${spring.mail.username}")
-    private String mailUsername;
+    @Value(">${spring.mail.properties.from}")
+    private String mailFrom;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
@@ -109,7 +109,7 @@ public class UserService {
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, false);
-            helper.setFrom(mailUsername);
+            helper.setFrom(mailFrom);
             helper.setTo(user.getEmail());
             helper.setSubject(subject);
             helper.setText(message, false);
